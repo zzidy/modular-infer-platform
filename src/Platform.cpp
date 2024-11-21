@@ -3,7 +3,7 @@
 
 
 int main() {
-    Task task;
+    TaskSpace::Task task;
     std::cout << "Hello World!" << std::endl;
     return 0;
 }
