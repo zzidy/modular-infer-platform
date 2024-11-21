@@ -1,5 +1,2 @@
-cmake_minimum_required(VERSION 3.10)
-
-project(Task)
-
-add_executable(Task Task.cpp)
+add_library(Tasklib SHARED Task.cpp)
+target_link_libraries(Tasklib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

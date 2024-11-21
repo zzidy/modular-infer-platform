@@ -9,9 +9,10 @@ Task::Task(/* args */)
 
 Task::~Task()
 {
+    std::cout << "Task::~Task()" << std::endl;
 }
 
-int main() {
-    Task task;
-    return 0;
-}
+// int main() {
+//     Task task;
+//     return 0;
+// }
