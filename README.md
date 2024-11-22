@@ -22,6 +22,5 @@ dev分支为当前开发分支，待开发完毕将合入主分支
   编译好的动态库存放在`install/lib`下，可执行文件存放在`install/bin`下。
   通过`./Platform`即可执行
 * 如何编写自己的业务代码？
-  在`src/My_Task`下仿照`TaskTest`写好自己的业务代码，然后按照注释提示修改`src/My_Task/CMakeLists.txt`，编译自己刚写好的业务代码。
-  生成的动态库存放在`src/lib`下，通过替换`install/lib/libTask.so`，即可通过`./Platform`运行自己的业务代码。
+  在`src/My_Task`下仿照`TaskTest`写好自己的业务代码，然后按照注释提示修改`src/My_Task/CMakeLists.txt`，编译自己刚写好的业务代码并执行`make install`，即可通过`./Platform`运行自己的业务代码。
   我会在`src/My_Task`下提供一些示范。
