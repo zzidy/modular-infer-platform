@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+namespace Task {
+
 class TaskBase {
  private:
   /* data */
@@ -16,5 +18,7 @@ class TaskBase {
 };
 
 extern "C" TaskBase* CreateTask();  // 工厂函数
+
+}  // namespace Task
 
 #endif

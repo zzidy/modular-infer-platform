@@ -2,6 +2,7 @@
 
 #include "TaskBase.h"
 
+namespace Task {
 class MyTask : public TaskBase {
  public:
   MyTask() { std::cout << "MyTask" << std::endl; }
@@ -10,3 +11,4 @@ class MyTask : public TaskBase {
   void DoTask() override;
   void DoneTask() override;
 };
+}  // namespace Task

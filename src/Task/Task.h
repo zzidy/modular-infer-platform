@@ -5,6 +5,8 @@
 
 #include "TaskBase.h"
 
+namespace Task {
+
 class Task : public TaskBase {
  private:
   /* data */
@@ -17,6 +19,6 @@ class Task : public TaskBase {
   virtual void DoneTask();  // 执行任务后清理
 };
 
-// extern "C" Task* CreateTask();  // 工厂函数
+}  // namespace Task
 
 #endif

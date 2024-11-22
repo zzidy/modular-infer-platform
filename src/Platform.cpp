@@ -16,7 +16,7 @@ int main() {
   }
 
   // 获取工厂函数
-  using CreateTaskFunc = Task* (*)();
+  using CreateTaskFunc = Task::Task* (*)();
   CreateTaskFunc fCreateTask = (CreateTaskFunc)dlsym(pHandle, "CreateTask");
   if (!fCreateTask) {
     std::cerr << "无法加载CreateTask函数: " << dlerror() << "\n";
@@ -25,7 +25,7 @@ int main() {
   }
 
   // 创建任务对象
-  Task* pTask = fCreateTask();
+  Task::Task* pTask = fCreateTask();
   if (!pTask) {
     std::cerr << "无法创建业务对象.\n";
     dlclose(pHandle);
