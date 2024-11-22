@@ -11,5 +11,5 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib) # 业务动态库存
 include_directories(TaskTest
                     ../Task)
 
-add_library(Task SHARED TaskTest/TaskTest.cpp)
-target_link_libraries(Task PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/TaskTest)
+add_library(Task SHARED TaskTest/TaskTest.cpp) # 每次编译新业务时修改此地址
+target_link_libraries(Task PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/TaskTest) # 每次编译新业务时修改此地址
