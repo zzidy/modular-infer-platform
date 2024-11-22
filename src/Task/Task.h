@@ -1,32 +1,27 @@
+#ifndef TASK_H
+#define TASK_H
+
 #include <iostream>
 
-namespace TaskSpace
+#include "TaskBase.h"
+
+class Task : public TaskBase
 {
-    class TaskBase
-    {
-    private:
-        /* data */
-    public:
-        TaskBase() = default;
-        ~TaskBase() = default;
+private:
+    /* data */
+public:
+    Task() = default;
+    ~Task() = default;
 
-        virtual void PreTask();
-        virtual void DoTask();
-        virtual void DoneTask();
-
-        static TaskBase* CreateTask();
-    };
+    virtual void PreTask();  // 执行任务前准备
+    virtual void DoTask();   // 执行任务
+    virtual void DoneTask(); // 执行任务后清理
+};
 
 
 
-    class Task
-    {
-    private:
-        TaskBase* m_pTask;
-    public:
-        Task();
-        ~Task();
-    };
-}
 
 
+// extern "C" Task* CreateTask();  // 工厂函数
+
+#endif

@@ -16,4 +16,5 @@ include_directories(src/Task)
 add_executable(Platform 
         src/Platform.cpp)
 
-target_link_libraries(Platform PRIVATE Tasklib)
+target_link_libraries(Platform PRIVATE 
+                        dl)                        

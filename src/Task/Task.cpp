@@ -2,39 +2,25 @@
 
 #include "Task.h"
 
-namespace TaskSpace
+
+    
+void Task::PreTask()
 {
-    Task::Task() : m_pTask(TaskBase::CreateTask())
-    {
-        std::cout << "Task::Task()" << std::endl;
+    std::cout << "Task::PreTask()" << std::endl;
+}
 
-        m_pTask->PreTask();
-        m_pTask->DoTask();
-        m_pTask->DoneTask();
-    }
+void Task::DoTask()
+{
+    std::cout << "Task::DoTask()" << std::endl;
+}
 
-    Task::~Task()
-    {
-        std::cout << "Task::~Task()" << std::endl;
-    }
+void Task::DoneTask()
+{
+    std::cout << "Task::DoneTask()" << std::endl;
+}
 
-    void TaskBase::PreTask()
-    {
-        std::cout << "TaskBase::PreTask()" << std::endl;
-    }
-
-    void TaskBase::DoTask()
-    {
-        std::cout << "TaskBase::DoTask()" << std::endl;
-    }
-
-    void TaskBase::DoneTask()
-    {
-        std::cout << "TaskBase::DoneTask()" << std::endl;
-    }
-
-    TaskBase* TaskBase::CreateTask()
-    {
-        return new TaskBase();
-    }
+    
+TaskBase *CreateTask()
+{
+    return new Task();
 }
