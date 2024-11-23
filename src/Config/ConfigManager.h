@@ -10,6 +10,8 @@
 
 namespace Config {
 
+enum class eConfigType { CSV };  // 当前支持的配置文件类型
+
 // 单例模式的管理者
 class ConfigManager {
  private:
@@ -25,7 +27,9 @@ class ConfigManager {
     return pCfgInstance;
   }
 
-  bool AddConfig(const std::string& sName, const std::string& sPath);
+  // 为管理者添加配置文件
+  bool AddConfig(const std::string& sName, const std::string& sPath,
+                 eConfigType eType);
 };
 
 }  // namespace Config

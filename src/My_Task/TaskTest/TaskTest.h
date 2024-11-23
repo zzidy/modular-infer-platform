@@ -10,5 +10,6 @@ class MyTask : public TaskBase {
   void PreTask() override;
   void DoTask() override;
   void DoneTask() override;
+  void print();
 };
 }  // namespace Task
