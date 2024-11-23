@@ -36,6 +36,9 @@ bool ConfigManager::AddConfig(const std::string& sName,
 }
 
 std::shared_ptr<ConfigBase> ConfigManager::GetConfig(const std::string& sName) {
+  if (m_mapCfg.find(sName) == m_mapCfg.end()) {
+    return nullptr;
+  }
   return m_mapCfg[sName];
 }
 
