@@ -15,7 +15,7 @@ bool ConfigManager::AddConfig(const std::string& sName,
     if (m_mapCfg.find(sName) == m_mapCfg.end()) {
       m_mapCfg[sName] = std::make_shared<ConfigCSV>(sName, sPath);
 
-      if (!m_mapCfg[sName]->isLoaded()) {
+      if (!m_mapCfg[sName]->IsLoaded()) {
         std::cout << "加载配置文件 " << sName << ":" << sPath << " 失败"
                   << std::endl;
       } else {
@@ -23,7 +23,7 @@ bool ConfigManager::AddConfig(const std::string& sName,
                   << std::endl;
       }
 
-      return m_mapCfg[sName]->isLoaded();
+      return m_mapCfg[sName]->IsLoaded();
     }
 
     std::cout << "该CSV配置文件 " << sName << ":" << sPath << " 已存在"
@@ -33,6 +33,10 @@ bool ConfigManager::AddConfig(const std::string& sName,
 
   std::cout << "当前配置文件格式还不支持" << std::endl;
   return false;
+}
+
+std::shared_ptr<ConfigBase> ConfigManager::GetConfig(const std::string& sName) {
+  return m_mapCfg[sName];
 }
 
 }  // namespace Config

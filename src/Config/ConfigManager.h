@@ -30,6 +30,7 @@ class ConfigManager {
   // 为管理者添加配置文件
   bool AddConfig(const std::string& sName, const std::string& sPath,
                  eConfigType eType);
+  std::shared_ptr<ConfigBase> GetConfig(const std::string& sName);
 };
 
 }  // namespace Config
