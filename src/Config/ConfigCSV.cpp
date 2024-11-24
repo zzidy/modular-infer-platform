@@ -30,6 +30,8 @@ bool ConfigCSV::LoadFromFile() {
     return false;
   }
 
+  // 先核对CSV格式是否正确
+
   return false;
 }
 
@@ -42,5 +44,7 @@ double ConfigCSV::GetDouble(const std::string& sKey) { return 0.0; }
 bool ConfigCSV::GetBool(const std::string& sKey) { return false; }
 
 bool ConfigCSV::HasKey(const std::string& sKey) { return false; }
+
+void ConfigCSV::ParseCsvLine(const std::string& sLine) {}
 
 }  // namespace Config
