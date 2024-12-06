@@ -15,7 +15,8 @@ struct CsvData {
 
 class ConfigCSV : public ConfigBase {
  private:
-  std::unordered_map<std::string, std::vector<CsvData>> m_mapCfgData;
+  std::unordered_map<std::string, std::unordered_map<std::string, CsvData>>
+      m_mapCfgData;
   void ParseCsvLine(const std::string& sLine);
 
  public:

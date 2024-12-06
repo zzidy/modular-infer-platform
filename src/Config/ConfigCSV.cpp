@@ -30,7 +30,20 @@ bool ConfigCSV::LoadFromFile() {
     return false;
   }
 
-  // 先核对CSV格式是否正确
+  // TODO：核对CSV标题行格式是否正确
+
+  std::string line;
+  bool isHeader = true;
+  while (std::getline(fCSV, line)) {
+    if (isHeader) {
+      isHeader = false;  // 跳过标题行
+      continue;
+    }
+    parseLine(line);
+  }
+
+  file.close();
+  return true;
 
   return false;
 }
