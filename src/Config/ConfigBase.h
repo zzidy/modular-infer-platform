@@ -26,7 +26,7 @@ class ConfigBase {
   //   加载配置文件
   virtual bool LoadFromFile() = 0;
 
-  //   读取配置文件
+  //   获取配置项
   virtual int GetString(const std::string& sGroup, const std::string& sName,
                         std::string& sOut) = 0;
   virtual int GetInt(const std::string& sGroup, const std::string& sName,

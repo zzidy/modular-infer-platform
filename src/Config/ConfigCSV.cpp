@@ -24,6 +24,8 @@ ConfigCSV::ConfigCSV(std::string sName, std::string sPath)
 ConfigCSV::~ConfigCSV() {}
 
 void ConfigCSV::PrintConfig() {
+  if (!IsLoaded()) return;
+
   std::cout << "配置文件 " << GetCfgName() << " 内容如下：" << std::endl;
   for (auto& itGroup : m_mapCfgData) {
     for (auto& itItem : itGroup.second) {
@@ -63,6 +65,7 @@ bool ConfigCSV::LoadFromFile() {
 
 int ConfigCSV::GetString(const std::string& sGroup, const std::string& sName,
                          std::string& sOut) {
+  if (!IsLoaded()) return -1;
   if (!HasKey(sGroup, sName)) return -1;
   if (m_mapCfgData[sGroup][sName].sType != "string") return -1;
   sOut = m_mapCfgData[sGroup][sName].sValue;
@@ -71,6 +74,7 @@ int ConfigCSV::GetString(const std::string& sGroup, const std::string& sName,
 
 int ConfigCSV::GetInt(const std::string& sGroup, const std::string& sName,
                       int& iOut) {
+  if (!IsLoaded()) return -1;
   if (!HasKey(sGroup, sName)) return -1;
   if (m_mapCfgData[sGroup][sName].sType != "int") return -1;
   iOut = std::stoi(m_mapCfgData[sGroup][sName].sValue);
@@ -79,6 +83,7 @@ int ConfigCSV::GetInt(const std::string& sGroup, const std::string& sName,
 
 int ConfigCSV::GetDouble(const std::string& sGroup, const std::string& sName,
                          double& dOut) {
+  if (!IsLoaded()) return -1;
   if (!HasKey(sGroup, sName)) return -1;
   if (m_mapCfgData[sGroup][sName].sType != "double") return -1;
   dOut = std::stod(m_mapCfgData[sGroup][sName].sValue);
@@ -87,6 +92,7 @@ int ConfigCSV::GetDouble(const std::string& sGroup, const std::string& sName,
 
 int ConfigCSV::GetBool(const std::string& sGroup, const std::string& sName,
                        bool& bOut) {
+  if (!IsLoaded()) return -1;
   if (!HasKey(sGroup, sName)) return -1;
   if (m_mapCfgData[sGroup][sName].sType != "bool") return -1;
   bOut = std::stoi(m_mapCfgData[sGroup][sName].sValue);
@@ -94,6 +100,7 @@ int ConfigCSV::GetBool(const std::string& sGroup, const std::string& sName,
 }
 
 bool ConfigCSV::HasKey(const std::string& sGroup, const std::string& sName) {
+  if (!IsLoaded()) return false;
   if ((m_mapCfgData.find(sGroup) != m_mapCfgData.end()) &&
       m_mapCfgData[sGroup].find(sName) != m_mapCfgData[sGroup].end())
     return true;
