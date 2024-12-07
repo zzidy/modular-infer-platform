@@ -21,19 +21,23 @@ class ConfigBase {
   void SetIsLoaded(bool bIsLoaded) { m_bIsLoaded = bIsLoaded; }
 
   //  打印配置文件
-  virtual void Print() = 0;
+  virtual void PrintConfig() = 0;
 
   //   加载配置文件
   virtual bool LoadFromFile() = 0;
 
   //   读取配置文件
-  virtual std::string GetString(const std::string& sKey) = 0;
-  virtual int GetInt(const std::string& sKey) = 0;
-  virtual double GetDouble(const std::string& sKey) = 0;
-  virtual bool GetBool(const std::string& sKey) = 0;
+  virtual int GetString(const std::string& sGroup, const std::string& sName,
+                        std::string& sOut) = 0;
+  virtual int GetInt(const std::string& sGroup, const std::string& sName,
+                     int& iOut) = 0;
+  virtual int GetDouble(const std::string& sGroup, const std::string& sName,
+                        double& dOut) = 0;
+  virtual int GetBool(const std::string& sGroup, const std::string& sName,
+                      bool& bOut) = 0;
 
   //   判断配置项是否存在
-  virtual bool HasKey(const std::string& sKey) = 0;
+  virtual bool HasKey(const std::string& sGroup, const std::string& sName) = 0;
 
  private:
   std::string m_sName;

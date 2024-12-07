@@ -10,8 +10,10 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/install/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/install/bin)
 
 add_subdirectory(src/Task)
+add_subdirectory(src/Config)
 
 include_directories(src/Task)
+include_directories(src/Config)
 
 add_executable(Platform 
         src/Platform.cpp)
