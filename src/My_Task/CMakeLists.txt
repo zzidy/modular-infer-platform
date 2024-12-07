@@ -1,19 +1,25 @@
 cmake_minimum_required(VERSION 3.10)
-project(Platform)
+project(My_Task)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_BUILD_TYPE Debug)
 
-# set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib) # 业务动态库存放地址，复制去替换原有业务库
+set(TASK_NAME ConfigTask) # 每次编译新业务时修改成文件夹名
 
-include_directories(TaskTest
-                    ../Task)
+include_directories(${TASK_NAME}
+                    ../Task
+                    ../Config)
 
-add_library(Task SHARED TaskTest/TaskTest.cpp) # 每次编译新业务时修改此地址
-target_link_libraries(Task PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/TaskTest) # 每次编译新业务时修改此地址
+add_library(Task SHARED ${TASK_NAME}/${TASK_NAME}.cpp) 
 
 set(INSTALL_LIB_DIR ${CMAKE_SOURCE_DIR}/../../install/lib) # 指定安装路径
 install(TARGETS Task
         LIBRARY DESTINATION ${INSTALL_LIB_DIR}) # 将动态库安装到指定路径
+
+# 如果存在config文件夹，则将config文件夹安装到指定路径
+if(EXISTS ${CMAKE_SOURCE_DIR}/${TASK_NAME}/config)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/${TASK_NAME}/config
+            DESTINATION ${INSTALL_LIB_DIR}/..)
+endif()

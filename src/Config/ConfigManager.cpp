@@ -8,8 +8,8 @@ ConfigManager::ConfigManager() { m_mapCfg.clear(); }
 
 ConfigManager::~ConfigManager() {}
 
-bool ConfigManager::AddConfig(const std::string& sName,
-                              const std::string& sPath, eConfigType eType) {
+int ConfigManager::AddConfig(const std::string& sName, const std::string& sPath,
+                             eConfigType eType) {
   // 添加CSV类型的配置文件
   if (eType == eConfigType::CSV) {
     if (m_mapCfg.find(sName) == m_mapCfg.end()) {
@@ -23,16 +23,19 @@ bool ConfigManager::AddConfig(const std::string& sName,
                   << std::endl;
       }
 
-      return m_mapCfg[sName]->IsLoaded();
+      if (m_mapCfg[sName]->IsLoaded())
+        return 0;
+      else
+        return -1;
     }
 
     std::cout << "该CSV配置文件 " << sName << ":" << sPath << " 已存在"
               << std::endl;
-    return false;
+    return -1;
   }
 
   std::cout << "当前配置文件格式还不支持" << std::endl;
-  return false;
+  return -1;
 }
 
 std::shared_ptr<ConfigBase> ConfigManager::GetConfig(const std::string& sName) {

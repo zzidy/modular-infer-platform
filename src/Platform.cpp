@@ -2,7 +2,11 @@
 
 #include <iostream>
 
+#include "ConfigManager.h"
 #include "Task.h"
+
+// 初始化
+void init() { Config::ConfigManager::GetInstance(); }
 
 int main() {
   // 业务库路径

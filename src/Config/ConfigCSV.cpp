@@ -106,7 +106,7 @@ int ConfigCSV::_ParseCsvLine(const std::string& sLine) {
 
   if (std::getline(ssLine, sGroup, ',') && std::getline(ssLine, sName, ',') &&
       std::getline(ssLine, sType, ',') && std::getline(ssLine, sValue, ',')) {
-    std::transform(sType.begin(), sType.end(), sGroup.begin(),
+    std::transform(sType.begin(), sType.end(), sType.begin(),
                    [](char c) { return std::tolower(c); });
     m_mapCfgData[sGroup][sName] = CsvData(sGroup, sName, sType, sValue);
   }
