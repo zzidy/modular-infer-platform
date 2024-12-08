@@ -5,7 +5,7 @@
 
 namespace ModelInfer {
 template <typename InputType, typename OutputType>
-class BaselInfer {
+class BaseInfer {
  public:
   BaseInfer(std::string sModelName, std::string sModelPath)
       : m_sModelName(sModelName), m_sModelPath(sModelPath){};

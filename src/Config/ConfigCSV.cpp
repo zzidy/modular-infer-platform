@@ -37,6 +37,11 @@ void ConfigCSV::PrintConfig() {
 }
 
 bool ConfigCSV::LoadFromFile() {
+  if (IsLoaded()) {
+    std::cout << "配置文件 " << GetCfgName() << " 已加载" << std::endl;
+    return false;
+  }
+
   std::ifstream fCSV(GetCfgPath());
   if (!fCSV.is_open()) {
     std::cout << "打开配置文件 " << GetCfgName() << " 失败" << std::endl;

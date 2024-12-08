@@ -57,7 +57,9 @@
         "regex": "cpp",
         "iomanip": "cpp",
         "shared_mutex": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "list": "cpp",
+        "mutex": "cpp"
     },
     "[cpp]": {
         "editor.defaultFormatter": "xaver.clang-format"

@@ -18,15 +18,12 @@ int ConfigManager::AddConfig(const std::string& sName, const std::string& sPath,
       if (!m_mapCfg[sName]->IsLoaded()) {
         std::cout << "加载配置文件 " << sName << ":" << sPath << " 失败"
                   << std::endl;
+        return -1;
       } else {
         std::cout << "加载配置文件 " << sName << ":" << sPath << " 成功"
                   << std::endl;
-      }
-
-      if (m_mapCfg[sName]->IsLoaded())
         return 0;
-      else
-        return -1;
+      }
     }
 
     std::cout << "该CSV配置文件 " << sName << ":" << sPath << " 已存在"
