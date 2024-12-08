@@ -1,5 +1,7 @@
 # 高优先级
 * 编写onnxinfer（下周）
+* 编写前处理模块（下周）
+* 修改gitignore，不同步my_task，该文件夹留作测试用，新增example_task文件夹，用于作为示范。
 * 完成两个onnx yolo模型不带后处理推理task（下周）
 
 # 中优先级
