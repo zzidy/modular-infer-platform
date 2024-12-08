@@ -6,7 +6,7 @@
 #include "Task.h"
 
 // 初始化
-void init() { Config::ConfigManager::GetInstance(); }
+void Init() { Config::ConfigManager::GetInstance(); }
 
 int main() {
   // 业务库路径
