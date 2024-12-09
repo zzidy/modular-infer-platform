@@ -1,5 +1,6 @@
 #ifndef BASEINFER_H
 #define BASEINFER_H
+
 #include <iostream>
 #include <string>
 
@@ -13,7 +14,7 @@ class BaseInfer {
 
   // 模型推理相关接口
   virtual bool LoadModel() = 0;
-  virtual int Infer(InputType& input, OutputType& output) = 0;
+  virtual int Infer(InputType& pInput, OutputType& pOutput) = 0;
 
   // 读取私有成员变量
   std::string GetModelName() { return m_sModelName; }

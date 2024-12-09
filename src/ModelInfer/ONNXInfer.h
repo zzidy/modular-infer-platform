@@ -15,9 +15,11 @@ class ONNXInfer : public BaseInfer<InputType, OutputType> {
   virtual ~ONNXInfer() = default;
 
   bool LoadModel() = 0 override;
-  int Infer(InputType& input, OutputType& output) = 0 override;
+  int Infer(InputType& pInput, OutputType& pOutput) = 0 override;
 };
 
+template <>
+class ONNXInfer<cv::Mat, std::vector<float>> {};
 }  // namespace ModelInfer
 
 #endif
