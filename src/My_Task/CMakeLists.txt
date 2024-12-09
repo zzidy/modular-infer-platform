@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_BUILD_TYPE Debug)
 
-set(TASK_NAME ConfigTask) # 每次编译新业务时修改成文件夹名
+set(TASK_NAME TaskTest) # 每次编译新业务时修改成文件夹名
 
 include_directories(${TASK_NAME}
                     ../Task

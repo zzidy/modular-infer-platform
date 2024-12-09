@@ -3,10 +3,14 @@
 #include <iostream>
 
 #include "ConfigManager.h"
+// #include "InferManager.h"
 #include "Task.h"
 
 // 初始化
-void Init() { Config::ConfigManager::GetInstance(); }
+void Init() {
+  Config::ConfigManager::GetInstance();
+  // ModelInfer::InferManager::GetInstance();
+}
 
 int main() {
   // 业务库路径
