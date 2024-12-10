@@ -30,4 +30,10 @@ std::shared_ptr<PreProcess<InputType, OutputType>> PreProcessMan::GetPreProcess(
   return std::static_pointer_cast<PreProcess<InputType, OutputType>>(
       m_mapPreProcess[sName]);
 }
+
+template int PreProcessMan::AddPreProcess<cv::Mat, cv::Mat>(
+    const std::string& sName);
+template std::shared_ptr<PreProcess<cv::Mat, cv::Mat>>
+PreProcessMan::GetPreProcess<cv::Mat, cv::Mat>(const std::string& sName);
+
 }  // namespace PreProcess

@@ -35,6 +35,9 @@ int PreProcess<cv::Mat, cv::Mat>::Process(const cv::Mat& mSrc, cv::Mat& mDst) {
   }
 
   // 先判断需要不要border
+
+  // 确定色彩空间再归一化，归一化参数的个数不确定
+  // 1->3,3->1,1->1,3->3
   return 0;
 }
 

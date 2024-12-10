@@ -6,11 +6,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_BUILD_TYPE Debug)
 
-set(TASK_NAME TaskTest) # 每次编译新业务时修改成文件夹名
+set(TASK_NAME PreProcessTask) # 每次编译新业务时修改成文件夹名
+
+find_package(OpenCV REQUIRED)
 
 include_directories(${TASK_NAME}
+                    ${OpenCV_INCLUDE_DIRS}
                     ../Task
-                    ../Config)
+                    ../Config
+                    ../PreProcess)
 
 add_library(Task SHARED ${TASK_NAME}/${TASK_NAME}.cpp) 
 

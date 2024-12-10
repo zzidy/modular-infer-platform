@@ -32,8 +32,8 @@ class PreProcess<cv::Mat, cv::Mat> {
 
     // 归一化
     bool bIsNorm;
-    std::vector<float> vMean;
-    std::vector<float> vStd;
+    std::vector<double> vMean;
+    std::vector<double> vStd;
 
     // border
     bool bIsBorder;
@@ -57,7 +57,7 @@ class PreProcess<cv::Mat, cv::Mat> {
 
     Img2ImgParams(int iSrcWidth, int iSrcHeight, int iSrcChannels,
                   int iDstWidth, int iDstHeight, int iDstChannels, bool bIsNorm,
-                  std::vector<float> vMean, std::vector<float> vStd,
+                  std::vector<double> vMean, std::vector<double> vStd,
                   bool bIsBorder, bool bIsScale, int iBorderWidth,
                   int iBorderHeight)
         : iSrcWidth(iSrcWidth),
