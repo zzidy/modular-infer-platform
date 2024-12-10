@@ -10,7 +10,7 @@ class ConfigTask : public TaskBase {
   ~ConfigTask() {}
   void PreTask() override;
   void DoTask() override;
-  void DoneTask() override;
+  void PostTask() override;
 };
 
 }  // namespace Task

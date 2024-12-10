@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "ConfigManager.h"
+#include "PreProcessMan.h"
 // #include "InferManager.h"
 #include "Task.h"
 
@@ -10,6 +11,7 @@
 void Init() {
   Config::ConfigManager::GetInstance();
   // ModelInfer::InferManager::GetInstance();
+  PreProcess::PreProcessMan::GetInstance();
 }
 
 int main() {
@@ -43,7 +45,7 @@ int main() {
   // 执行任务
   pTask->PreTask();
   pTask->DoTask();
-  pTask->DoneTask();
+  pTask->PostTask();
 
   // 释放资源
   delete pTask;

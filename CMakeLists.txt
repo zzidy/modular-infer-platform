@@ -9,14 +9,22 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/install/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/install/bin)
 
+# opencv库
+find_package(OpenCV REQUIRED)
+
 add_subdirectory(src/Config)
 add_subdirectory(src/Task)
+add_subdirectory(src/PreProcess)
 
 include_directories(src/Config)
 include_directories(src/Task)
+include_directories(src/PreProcess)
+
+include_directories(${OpenCV_INCLUDE_DIRS})
 
 add_executable(Platform 
         src/Platform.cpp)
 
 target_link_libraries(Platform PRIVATE 
-                        dl Config)                        
+                        dl ${OpenCV_LIBS} 
+                        Config PreProcess Task)                        

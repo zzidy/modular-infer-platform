@@ -41,7 +41,7 @@ void ConfigTask::DoTask() {
   std::cout << pConfig->GetString(sGroup1, sNameB, str) << std::endl;
 }
 
-void ConfigTask::DoneTask() {}
+void ConfigTask::PostTask() {}
 
 TaskBase* CreateTask() { return new ConfigTask(); }
 }  // namespace Task

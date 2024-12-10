@@ -3,8 +3,8 @@
 namespace Task {
 void MyTask::PreTask() { std::cout << "MyTest::PreTask()" << std::endl; }
 void MyTask::DoTask() { std::cout << "MyTest::DoTask()" << std::endl; }
-void MyTask::DoneTask() {
-  std::cout << "MyTest::DoneTask()" << std::endl;
+void MyTask::PostTask() {
+  std::cout << "MyTest::PostTask()" << std::endl;
   print();
 }
 

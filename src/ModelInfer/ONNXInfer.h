@@ -18,6 +18,7 @@ class ONNXInfer : public BaseInfer<InputType, OutputType> {
   int Infer(InputType& pInput, OutputType& pOutput) = 0 override;
 };
 
+// 用于图片输入，数组输出的onnx模型推理的模版特化
 template <>
 class ONNXInfer<cv::Mat, std::vector<float>> {};
 }  // namespace ModelInfer

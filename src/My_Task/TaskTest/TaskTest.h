@@ -9,7 +9,7 @@ class MyTask : public TaskBase {
   ~MyTask() { std::cout << "~MyTask" << std::endl; }
   void PreTask() override;
   void DoTask() override;
-  void DoneTask() override;
+  void PostTask() override;
   void print();
 };
 }  // namespace Task

@@ -16,7 +16,7 @@ class Task : public TaskBase {
 
   virtual void PreTask();   // 执行任务前准备
   virtual void DoTask();    // 执行任务
-  virtual void DoneTask();  // 执行任务后清理
+  virtual void PostTask();  // 执行任务后清理
 };
 
 }  // namespace Task
