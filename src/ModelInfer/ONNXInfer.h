@@ -15,7 +15,7 @@ class ONNXInfer : public BaseInfer<InputType, OutputType> {
   virtual ~ONNXInfer() = default;
 
   bool LoadModel() = 0 override;
-  int Infer(InputType& pInput, OutputType& pOutput) = 0 override;
+  int Infer(InputType& rInput, OutputType& rOutput) = 0 override;
 };
 
 // 用于图片输入，数组输出的onnx模型推理的模版特化

@@ -50,7 +50,7 @@ void PreProcessTask::DoTask() {
   auto pPreProcess =
       rPreProcessMan.GetPreProcess<cv::Mat, cv::Mat>(sPreProcessName);
 
-  PreProcess::PreProcess<cv::Mat, cv::Mat>::Img2ImgParams pParams;
+  PreProcess::Img2ImgParams& pParams = pPreProcess->GetParams();
   pConfig->GetInt(sGroupPre, sSrcWidth, pParams.iSrcWidth);
   pConfig->GetInt(sGroupPre, sSrcHeight, pParams.iSrcHeight);
   pConfig->GetInt(sGroupPre, SrcChannels, pParams.iSrcChannels);
@@ -73,7 +73,9 @@ void PreProcessTask::DoTask() {
   pConfig->GetInt(sGroupPre, sBorderWidth, pParams.iBorderWidth);
   pConfig->GetInt(sGroupPre, sBorderHeight, pParams.iBorderHeight);
 
-  pPreProcess->SetParams(&pParams);
+  //   pParams.PrintParam();
+  //   pPreProcess->SetParams(pParams);
+  pPreProcess->GetParams().PrintParam();
 }
 
 void PreProcessTask::PostTask() {}

@@ -31,6 +31,7 @@ std::shared_ptr<PreProcess<InputType, OutputType>> PreProcessMan::GetPreProcess(
       m_mapPreProcess[sName]);
 }
 
+// 显示实例化
 template int PreProcessMan::AddPreProcess<cv::Mat, cv::Mat>(
     const std::string& sName);
 template std::shared_ptr<PreProcess<cv::Mat, cv::Mat>>

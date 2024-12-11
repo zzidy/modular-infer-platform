@@ -23,8 +23,8 @@ class ConfigManager {
   ConfigManager(const ConfigManager&) = delete;
   ConfigManager& operator=(const ConfigManager&) = delete;
   static ConfigManager& GetInstance() {
-    static ConfigManager pCfgInstance;
-    return pCfgInstance;
+    static ConfigManager rCfgInstance;
+    return rCfgInstance;
   }
 
   // 为管理者添加配置文件

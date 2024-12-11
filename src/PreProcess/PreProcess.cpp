@@ -2,7 +2,7 @@
 
 namespace PreProcess {
 
-void PreProcess<cv::Mat, cv::Mat>::Img2ImgParams::PrintParam() {
+void Img2ImgParams::PrintParam() {
   std::cout << "Img2ImgParams:" << std::endl;
   std::cout << "iSrcWidth: " << iSrcWidth << std::endl;
   std::cout << "iSrcHeight: " << iSrcHeight << std::endl;
@@ -23,17 +23,10 @@ void PreProcess<cv::Mat, cv::Mat>::Img2ImgParams::PrintParam() {
   std::cout << "iBorderHeight: " << iBorderHeight << std::endl;
 }
 
-PreProcess<cv::Mat, cv::Mat>::PreProcess() : m_pParams(nullptr) {}
-PreProcess<cv::Mat, cv::Mat>::~PreProcess() {
-  if (m_pParams) delete m_pParams;
-}
+PreProcess<cv::Mat, cv::Mat>::PreProcess() {}
+PreProcess<cv::Mat, cv::Mat>::~PreProcess() {}
 
 int PreProcess<cv::Mat, cv::Mat>::Process(const cv::Mat& mSrc, cv::Mat& mDst) {
-  if (!m_pParams) {
-    std::cout << "参数未加载，请先加载参数" << std::endl;
-    return -1;
-  }
-
   // 先判断需要不要border
 
   // 确定色彩空间再归一化，归一化参数的个数不确定
@@ -41,10 +34,11 @@ int PreProcess<cv::Mat, cv::Mat>::Process(const cv::Mat& mSrc, cv::Mat& mDst) {
   return 0;
 }
 
-int PreProcess<cv::Mat, cv::Mat>::SetParams(void* pParams) {
-  if (m_pParams) delete m_pParams;
-  m_pParams = new Params(*static_cast<Params*>(pParams));
-  m_pParams->PrintParam();
+Img2ImgParams& PreProcess<cv::Mat, cv::Mat>::GetParams() { return m_pParams; }
+
+int PreProcess<cv::Mat, cv::Mat>::SetParams(Img2ImgParams& pParams) {
+  m_pParams = Img2ImgParams(pParams);
+  m_pParams.PrintParam();
   return 0;
 }
 }  // namespace PreProcess

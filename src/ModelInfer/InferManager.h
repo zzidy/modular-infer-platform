@@ -24,8 +24,8 @@ class InferManager {
   InferManager& operator=(const InferManager&) = delete;
 
   static InferManager& GetInstance() {
-    static InferManager pInferManInstance;
-    return pInferManInstance;
+    static InferManager rInferManInstance;
+    return rInferManInstance;
   }
 
   template <typename InputType, typename OutputType>

@@ -14,13 +14,13 @@ const std::string sNameC = "C";
 namespace Task {
 void ConfigTask::PreTask() {
   // 加载配置文件
-  Config::ConfigManager& pConfigManager = Config::ConfigManager::GetInstance();
-  pConfigManager.AddConfig(sConfigName, sConfigPath, Config::eConfigType::CSV);
+  Config::ConfigManager& rConfigManager = Config::ConfigManager::GetInstance();
+  rConfigManager.AddConfig(sConfigName, sConfigPath, Config::eConfigType::CSV);
 }
 
 void ConfigTask::DoTask() {
-  Config::ConfigManager& pConfigManager = Config::ConfigManager::GetInstance();
-  auto pConfig = pConfigManager.GetConfig(sConfigName);
+  Config::ConfigManager& rConfigManager = Config::ConfigManager::GetInstance();
+  auto pConfig = rConfigManager.GetConfig(sConfigName);
   if (!pConfig) {
     return;
   }

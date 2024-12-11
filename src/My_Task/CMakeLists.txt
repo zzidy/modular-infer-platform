@@ -8,10 +8,7 @@ set(CMAKE_BUILD_TYPE Debug)
 
 set(TASK_NAME PreProcessTask) # 每次编译新业务时修改成文件夹名
 
-find_package(OpenCV REQUIRED)
-
 include_directories(${TASK_NAME}
-                    ${OpenCV_INCLUDE_DIRS}
                     ../Task
                     ../Config
                     ../PreProcess)

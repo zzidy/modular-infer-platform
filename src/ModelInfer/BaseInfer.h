@@ -14,7 +14,7 @@ class BaseInfer {
 
   // 模型推理相关接口
   virtual bool LoadModel() = 0;
-  virtual int Infer(InputType& pInput, OutputType& pOutput) = 0;
+  virtual int Infer(InputType& rInput, OutputType& rOutput) = 0;
 
   // 读取私有成员变量
   std::string GetModelName() { return m_sModelName; }
