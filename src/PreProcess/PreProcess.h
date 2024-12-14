@@ -28,6 +28,7 @@ struct Img2ImgParams {
 
   // 归一化
   bool bIsNorm;
+  bool bUseMinMax;
   std::vector<double> vMean;
   std::vector<double> vStd;
 
@@ -52,7 +53,7 @@ struct Img2ImgParams {
   }
 
   Img2ImgParams(int iSrcWidth, int iSrcHeight, int iSrcChannels, int iDstWidth,
-                int iDstHeight, int iDstChannels, bool bIsNorm,
+                int iDstHeight, int iDstChannels, bool bIsNorm, bool bUseMinMax,
                 std::vector<double> vMean, std::vector<double> vStd,
                 bool bIsBorder, bool bIsScale, int iBorderWidth,
                 int iBorderHeight)
@@ -63,6 +64,7 @@ struct Img2ImgParams {
         iDstHeight(iDstHeight),
         iDstChannels(iDstChannels),
         bIsNorm(bIsNorm),
+        bUseMinMax(bUseMinMax),
         vMean(vMean),
         vStd(vStd),
         bIsBorder(bIsBorder),
@@ -77,26 +79,28 @@ struct Img2ImgParams {
         iDstHeight(rParams.iDstHeight),
         iDstChannels(rParams.iDstChannels),
         bIsNorm(rParams.bIsNorm),
+        bUseMinMax(rParams.bUseMinMax),
         vMean(rParams.vMean),
         vStd(rParams.vStd),
         bIsBorder(rParams.bIsBorder),
         bIsScale(rParams.bIsScale),
         iBorderWidth(rParams.iBorderWidth),
         iBorderHeight(rParams.iBorderHeight) {}
-  Img2ImgParams(Img2ImgParams* rParams)
-      : iSrcWidth(rParams->iSrcWidth),
-        iSrcHeight(rParams->iSrcHeight),
-        iSrcChannels(rParams->iSrcChannels),
-        iDstWidth(rParams->iDstWidth),
-        iDstHeight(rParams->iDstHeight),
-        iDstChannels(rParams->iDstChannels),
-        bIsNorm(rParams->bIsNorm),
-        vMean(rParams->vMean),
-        vStd(rParams->vStd),
-        bIsBorder(rParams->bIsBorder),
-        bIsScale(rParams->bIsScale),
-        iBorderWidth(rParams->iBorderWidth),
-        iBorderHeight(rParams->iBorderHeight) {}
+  Img2ImgParams(Img2ImgParams* pParams)
+      : iSrcWidth(pParams->iSrcWidth),
+        iSrcHeight(pParams->iSrcHeight),
+        iSrcChannels(pParams->iSrcChannels),
+        iDstWidth(pParams->iDstWidth),
+        iDstHeight(pParams->iDstHeight),
+        iDstChannels(pParams->iDstChannels),
+        bIsNorm(pParams->bIsNorm),
+        bUseMinMax(pParams->bUseMinMax),
+        vMean(pParams->vMean),
+        vStd(pParams->vStd),
+        bIsBorder(pParams->bIsBorder),
+        bIsScale(pParams->bIsScale),
+        iBorderWidth(pParams->iBorderWidth),
+        iBorderHeight(pParams->iBorderHeight) {}
 
   virtual void PrintParam();
 };

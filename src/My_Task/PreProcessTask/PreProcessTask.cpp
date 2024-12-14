@@ -15,6 +15,7 @@ const std::string sDstWidth = "DstWidth";
 const std::string sDstHeight = "DstHeight";
 const std::string sDstChannels = "DstChannels";
 const std::string sIsNorm = "IsNorm";
+const std::string sUseMinMax = "UseMinMax";
 const std::string sMean0 = "Mean0";
 const std::string sMean1 = "Mean1";
 const std::string sMean2 = "Mean2";
@@ -58,6 +59,7 @@ void PreProcessTask::DoTask() {
   pConfig->GetInt(sGroupPre, sDstHeight, pParams.iDstHeight);
   pConfig->GetInt(sGroupPre, sDstChannels, pParams.iDstChannels);
   pConfig->GetBool(sGroupPre, sIsNorm, pParams.bIsNorm);
+  pConfig->GetBool(sGroupPre, sUseMinMax, pParams.bUseMinMax);
   std::vector<double> vMean(3);
   pConfig->GetDouble(sGroupPre, sMean0, vMean[0]);
   pConfig->GetDouble(sGroupPre, sMean1, vMean[1]);

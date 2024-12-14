@@ -6,6 +6,7 @@ preprocess,DstWidth,int,640
 preprocess,DstHeight,int,640
 preprocess,DstChannels,int,3
 preprocess,IsNorm,bool,1
+preprocess,UseMinMax,bool,0
 preprocess,Mean0,double,0.1
 preprocess,Mean1,double,0.2
 preprocess,Mean2,double,0.3
