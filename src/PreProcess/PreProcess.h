@@ -28,7 +28,7 @@ struct Img2ImgParams {
 
   // 归一化
   bool bIsNorm;
-  bool bUseMinMax;
+  bool bUseMeanStd;
   std::vector<double> vMean;
   std::vector<double> vStd;
 
@@ -38,25 +38,27 @@ struct Img2ImgParams {
   int iBorderWidth;
   int iBorderHeight;
 
-  Img2ImgParams() {
-    iSrcWidth = 0;
-    iSrcHeight = 0;
-    iSrcChannels = 0;
-
-    iDstWidth = 0;
-    iDstHeight = 0;
-    iDstChannels = 0;
-
-    bIsNorm = false;
-    bIsBorder = false;
-    bIsScale = false;
-  }
+  Img2ImgParams()
+      : iSrcWidth(0),
+        iSrcHeight(0),
+        iSrcChannels(0),
+        iDstWidth(0),
+        iDstHeight(0),
+        iDstChannels(0),
+        bIsNorm(false),
+        bUseMeanStd(false),
+        vMean({}),
+        vStd({}),
+        bIsBorder(false),
+        bIsScale(false),
+        iBorderWidth(0),
+        iBorderHeight(0) {}
 
   Img2ImgParams(int iSrcWidth, int iSrcHeight, int iSrcChannels, int iDstWidth,
-                int iDstHeight, int iDstChannels, bool bIsNorm, bool bUseMinMax,
-                std::vector<double> vMean, std::vector<double> vStd,
-                bool bIsBorder, bool bIsScale, int iBorderWidth,
-                int iBorderHeight)
+                int iDstHeight, int iDstChannels, bool bIsNorm,
+                bool bUseMeanStd, std::vector<double> vMean,
+                std::vector<double> vStd, bool bIsBorder, bool bIsScale,
+                int iBorderWidth, int iBorderHeight)
       : iSrcWidth(iSrcWidth),
         iSrcHeight(iSrcHeight),
         iSrcChannels(iSrcChannels),
@@ -64,7 +66,7 @@ struct Img2ImgParams {
         iDstHeight(iDstHeight),
         iDstChannels(iDstChannels),
         bIsNorm(bIsNorm),
-        bUseMinMax(bUseMinMax),
+        bUseMeanStd(bUseMeanStd),
         vMean(vMean),
         vStd(vStd),
         bIsBorder(bIsBorder),
@@ -79,7 +81,7 @@ struct Img2ImgParams {
         iDstHeight(rParams.iDstHeight),
         iDstChannels(rParams.iDstChannels),
         bIsNorm(rParams.bIsNorm),
-        bUseMinMax(rParams.bUseMinMax),
+        bUseMeanStd(rParams.bUseMeanStd),
         vMean(rParams.vMean),
         vStd(rParams.vStd),
         bIsBorder(rParams.bIsBorder),
@@ -94,7 +96,7 @@ struct Img2ImgParams {
         iDstHeight(pParams->iDstHeight),
         iDstChannels(pParams->iDstChannels),
         bIsNorm(pParams->bIsNorm),
-        bUseMinMax(pParams->bUseMinMax),
+        bUseMeanStd(pParams->bUseMeanStd),
         vMean(pParams->vMean),
         vStd(pParams->vStd),
         bIsBorder(pParams->bIsBorder),

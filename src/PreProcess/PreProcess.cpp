@@ -13,7 +13,7 @@ void Img2ImgParams::PrintParam() {
   std::cout << "iDstHeight: " << iDstHeight << std::endl;
   std::cout << "iDstChannels: " << iDstChannels << std::endl;
   std::cout << "bIsNorm: " << bIsNorm << std::endl;
-  std::cout << "bUseMinMax: " << bUseMinMax << std::endl;
+  std::cout << "bUseMeanStd: " << bUseMeanStd << std::endl;
   std::cout << "vMean: ";
   for (int i = 0; i < vMean.size(); i++) std::cout << vMean[i] << " ";
   std::cout << std::endl;
@@ -91,27 +91,28 @@ int PreProcess<cv::Mat, cv::Mat>::Process(const cv::Mat& mSrc, cv::Mat& mDst) {
   // step3: 归一化
   if (m_pParams.bIsNorm) {
     // 使用均值和标准差归一化
-    if (!m_pParams.bUseMinMax && !m_pParams.vMean.empty() &&
-        !m_pParams.vStd.empty()) {
+    if (m_pParams.bUseMeanStd) {
+      if (m_pParams.vMean.empty() || m_pParams.vStd.empty()) {
+        std::cout << "mean or std is empty" << std::endl;
+        return -1;
+      }
       std::vector<cv::Mat> vChannels;
       cv::split(mConvert, vChannels);
 
       for (size_t i = 0; i < vChannels.size(); ++i) {
-        vChannels[i].convertTo(vChannels[i], CV_64F);
+        vChannels[i].convertTo(vChannels[i], CV_32F);
         vChannels[i] = (vChannels[i] - m_pParams.vMean[i]) / m_pParams.vStd[i];
       }
 
       cv::merge(vChannels, mDst);
     } else {
-      // 使用最大最小值归一化
       mConvert.convertTo(mConvert, CV_32F, 1.0 / 255.0);
     }
-    mConvert.convertTo(mConvert, CV_8U);
   }
 
   mDst = mConvert;
   return 0;
-}  // namespace PreProcess
+}
 
 Img2ImgParams& PreProcess<cv::Mat, cv::Mat>::GetParams() { return m_pParams; }
 

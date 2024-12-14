@@ -8,12 +8,19 @@ set(CMAKE_BUILD_TYPE Debug)
 
 set(TASK_NAME PreProcessTask) # 每次编译新业务时修改成文件夹名
 
+find_package(OpenCV REQUIRED)
+
 include_directories(${TASK_NAME}
+                    ${OpenCV_INCLUDE_DIRS}
                     ../Task
                     ../Config
                     ../PreProcess)
 
 add_library(Task SHARED ${TASK_NAME}/${TASK_NAME}.cpp) 
+
+target_link_libraries(Task PRIVATE 
+                        ${OpenCV_LIBS} 
+                        )          
 
 set(INSTALL_LIB_DIR ${CMAKE_SOURCE_DIR}/../../install/lib) # 指定安装路径
 install(TARGETS Task
@@ -22,5 +29,11 @@ install(TARGETS Task
 # 如果存在config文件夹，则将config文件夹安装到指定路径
 if(EXISTS ${CMAKE_SOURCE_DIR}/${TASK_NAME}/config)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/${TASK_NAME}/config
+            DESTINATION ${INSTALL_LIB_DIR}/..)
+endif()
+
+# 如果存在data文件夹，则将data文件夹安装到指定路径
+if(EXISTS ${CMAKE_SOURCE_DIR}/${TASK_NAME}/data)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/${TASK_NAME}/data
             DESTINATION ${INSTALL_LIB_DIR}/..)
 endif()
