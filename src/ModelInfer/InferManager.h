@@ -33,6 +33,10 @@ class InferManager {
                eModelType eType);
 
   template <typename InputType, typename OutputType>
+  int AddInfer(const std::string& sName, const std::string& sPath,
+               const std::string& sType);
+
+  template <typename InputType, typename OutputType>
   std::shared_ptr<BaseInfer<InputType, OutputType>> GetInfer(
       const std::string& sName);
 };

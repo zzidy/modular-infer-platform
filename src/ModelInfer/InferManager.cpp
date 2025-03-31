@@ -53,6 +53,24 @@ int InferManager::AddInfer(const std::string& sName, const std::string& sPath,
 }
 
 template <typename InputType, typename OutputType>
+int AddInfer(const std::string& sName, const std::string& sPath,
+             const std::string& sType) {
+  std::transform(sType.begin(), sType.end(), sType.begin(),
+                 [](char c) { return std::tolower(c); });
+
+  if (sType == "onnx") {
+    return InferManager::AddInfer<InputType, OutputType>(sName, sPath,
+                                                         eModelType::ONNX);
+  } else if (sType == "rknn") {
+    return InferManager::AddInfer<InputType, OutputType>(sName, sPath,
+                                                         eModelType::RKNN);
+  } else {
+    std::cout << "该模型类型不支持" << std::endl;
+    return -1;
+  }
+}
+
+template <typename InputType, typename OutputType>
 std::shared_ptr<BaseInfer<InputType, OutputType>> GetInfer(
     const std::string& sName) {
   if (m_mapInfer.find(sName) == m_mapInfer.end()) return nullptr;

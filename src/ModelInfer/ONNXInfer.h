@@ -2,6 +2,7 @@
 #define ONNXINFER_H
 
 #include <iostream>
+#include <opencv2/opencv.hpp>
 
 #include "BaseInfer.h"
 
@@ -20,7 +21,14 @@ class ONNXInfer : public BaseInfer<InputType, OutputType> {
 
 // 用于图片输入，数组输出的onnx模型推理的模版特化
 template <>
-class ONNXInfer<cv::Mat, std::vector<float>> {};
+class ONNXInfer<cv::Mat, std::vector<float>>
+    : public BaseInfer<cv::Mat, std::vector<float>> {
+ public:
+  ONNXInfer(std::string sName, std::string sPath) : BaseInfer(sName, sPath){};
+  virtual ~ONNXInfer() = default;
+  bool LoadModel() override;
+  int Infer(cv::Mat& rInput, std::vector<float>& rOutput) override;
+};
 }  // namespace ModelInfer
 
 #endif

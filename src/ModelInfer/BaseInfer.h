@@ -5,6 +5,7 @@
 #include <string>
 
 namespace ModelInfer {
+
 template <typename InputType, typename OutputType>
 class BaseInfer {
  public:
