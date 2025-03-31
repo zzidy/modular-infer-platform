@@ -39,7 +39,7 @@ void ConfigCSV::PrintConfig() {
 bool ConfigCSV::LoadFromFile() {
   if (IsLoaded()) {
     std::cout << "配置文件 " << GetCfgName() << " 已加载" << std::endl;
-    return false;
+    return true;
   }
 
   std::ifstream fCSV(GetCfgPath());

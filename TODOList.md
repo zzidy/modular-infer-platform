@@ -16,4 +16,5 @@
 * 编写tensorrtinfer
 * 编写相机模块：实时处理
 * 编写多线程模块
+* 将头文件整理出来，作为手册放在install/include下方便阅读接口
 * 测试config模块
