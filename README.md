@@ -9,10 +9,15 @@ dev分支为当前开发分支，待开发完毕将合入主分支
   1. 首先安装本项目所需的其他软件：OpenCv
   2. 新建build目录，并在build目录中执行
      ```sh
-     cmake .. && make -j 8
+     cmake .. && make -j8
      ```
      编译好的动态库存放在`install/lib`下，可执行文件存放在`install/bin`下。
-  1. 通过`./Platform`即可执行
+  3. 如果要编译自己的业务，在`src/My_Task`目录中新建build目录，并在build目录中执行 
+     ```sh
+     cmake .. && make -j8
+     make install
+     ```
+  4. 回到`install/bin`下，通过`./Platform`即可运行。
 
 # 如何编写自己的业务代码？
   在`src/My_Task`下仿照`TaskTest`写好自己的业务代码，然后按照注释提示修改`src/My_Task/CMakeLists.txt`，编译自己刚写好的业务代码并执行`make install`，即可通过`./Platform`运行自己的业务代码。
