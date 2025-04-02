@@ -22,7 +22,9 @@ int InferManager::AddInfer(const std::string& sName, const std::string& sPath,
         m_mapInfer[sName] =
             std::make_shared<ONNXInfer<InputType, OutputType>>(sName, sPath);
 
-        if (!m_mapInfer[sName]->IsLoaded()) {
+        if (!std::static_pointer_cast<BaseInfer<InputType, OutputType>>(
+                 m_mapInfer[sName])
+                 ->IsLoaded()) {
           std::cout << "模型" << sName << ":" << sPath << "加载失败"
                     << std::endl;
           return -1;
@@ -71,7 +73,7 @@ int AddInfer(const std::string& sName, const std::string& sPath,
 }
 
 template <typename InputType, typename OutputType>
-std::shared_ptr<BaseInfer<InputType, OutputType>> GetInfer(
+std::shared_ptr<BaseInfer<InputType, OutputType>> InferManager::GetInfer(
     const std::string& sName) {
   if (m_mapInfer.find(sName) == m_mapInfer.end()) return nullptr;
   return std::static_pointer_cast<BaseInfer<InputType, OutputType>>(
