@@ -10,8 +10,7 @@ namespace ModelInfer {
 class ONNXEnv {
  private:
   ONNXEnv() {
-    Ort::Env env =
-        Ort::Env(OrtLoggingLevel::ORT_LOGGING_LEVEL_WARNING, "ONNXInfer");
+    Ort::Env env(OrtLoggingLevel::ORT_LOGGING_LEVEL_WARNING, "ONNXInfer");
   };
 
  public:
@@ -26,6 +25,7 @@ class ONNXEnv {
 ONNXInfer<cv::Mat, std::vector<float>>::ONNXInfer(std::string sName,
                                                   std::string sPath)
     : BaseInfer<cv::Mat, std::vector<float>>(sName, sPath) {
+  // 初始化ONNXRuntime环境
   ONNXEnv pEnv = ONNXEnv::GetInstance();
 };
 bool ONNXInfer<cv::Mat, std::vector<float>>::LoadModel() { return false; }

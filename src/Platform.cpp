@@ -3,14 +3,14 @@
 #include <iostream>
 
 #include "ConfigManager.h"
+#include "InferManager.h"
 #include "PreProcessMan.h"
-// #include "InferManager.h"
 #include "Task.h"
 
 // 初始化
 void Init() {
   Config::ConfigManager::GetInstance();
-  // ModelInfer::InferManager::GetInstance();
+  ModelInfer::InferManager::GetInstance();
   PreProcess::PreProcessMan::GetInstance();
 }
 
