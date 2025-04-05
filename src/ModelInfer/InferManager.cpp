@@ -55,8 +55,8 @@ int InferManager::AddInfer(const std::string& sName, const std::string& sPath,
 }
 
 template <typename InputType, typename OutputType>
-int AddInfer(const std::string& sName, const std::string& sPath,
-             const std::string& sType) {
+int InferManager::AddInfer(const std::string& sName, const std::string& sPath,
+                           const std::string& sType) {
   std::transform(sType.begin(), sType.end(), sType.begin(),
                  [](char c) { return std::tolower(c); });
 

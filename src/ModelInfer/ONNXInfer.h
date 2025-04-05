@@ -24,8 +24,7 @@ template <>
 class ONNXInfer<cv::Mat, std::vector<float>>
     : public BaseInfer<cv::Mat, std::vector<float>> {
  public:
-  ONNXInfer(std::string sName, std::string sPath)
-      : BaseInfer<cv::Mat, std::vector<float>>(sName, sPath){};
+  ONNXInfer(std::string sName, std::string sPath);
   virtual ~ONNXInfer() = default;
   bool LoadModel() override;
   int Infer(cv::Mat& rInput, std::vector<float>& rOutput) override;
