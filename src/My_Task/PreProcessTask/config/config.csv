@@ -1,5 +1,5 @@
 Group,Name,Type,Value
-preprocess,InputPath,string,../data/input.jpg
+preprocess,InputPath,string,../data/yolo.jpg
 preprocess,OutputPath,string,../data/output.jpg
 preprocess,DstWidth,int,640
 preprocess,DstHeight,int,640
