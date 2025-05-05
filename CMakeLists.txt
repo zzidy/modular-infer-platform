@@ -43,3 +43,30 @@ add_executable(Platform
 target_link_libraries(Platform PRIVATE
         dl ${OpenCV_LIBS}
         Config PreProcess Task ModelInfer)
+
+# 显示编译内容
+message(STATUS "")
+message(STATUS "============ Build Configuration ============")
+message(STATUS "C++ Standard          : ${CMAKE_CXX_STANDARD}")
+message(STATUS "Build Type            : ${CMAKE_BUILD_TYPE}")
+message(STATUS "Install Bin Directory : ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
+message(STATUS "Install Lib Directory : ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
+message(STATUS "---------------------------------------------")
+
+if(OpenCV_FOUND)
+        message(STATUS "OpenCV Found          : on")
+        message(STATUS "OpenCV Version        : ${OpenCV_VERSION}")
+else()
+        message(STATUS "OpenCV Found          : off")
+endif()
+
+message(STATUS "ONNX Runtime Enabled  : ${USE_ONNX}")
+message(STATUS "ONNX Runtime Dir      : ${ONNXRUNTIME_DIR}")
+
+if(NOT USE_ONNX)
+        message(STATUS "---------------------------------------------")
+        message(STATUS "WARNING : ModelInfer is lack  of ONNX Runtime")
+endif()
+
+message(STATUS "=============================================")
+message(STATUS "")
