@@ -9,6 +9,7 @@ set(SOURCES InferManager.cpp)
 
 if(USE_ONNX)
     list(APPEND SOURCES ONNXInfer.cpp)
+    target_compile_definitions(ModelInfer PRIVATE USE_ONNX)
 endif()
 
 add_library(ModelInfer SHARED ${SOURCES})

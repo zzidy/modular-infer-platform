@@ -3,8 +3,9 @@
 #include <opencv2/opencv.hpp>
 #include <vector>
 
+#ifdef USE_ONNX
 #include "ONNXInfer.h"
-
+#endif
 namespace ModelInfer {
 InferManager::InferManager() { m_mapInfer.clear(); }
 InferManager::~InferManager() {}
@@ -14,6 +15,10 @@ int InferManager::AddInfer(const std::string& sName, const std::string& sPath,
                            eModelType eType) {
   // 添加onnx模型
   if (eType == eModelType::ONNX) {
+#ifndef USE_ONNX
+    std::cout << "未启用 ONNX 模型支持，请打开 USE_ONNX 开关" << std::endl;
+    return -1;
+#else
     // 判断是否存在该输入输出的特化模版
     if (typeid(InputType) == typeid(cv::Mat) &&
         typeid(OutputType) == typeid(std::vector<float>)) {
@@ -42,7 +47,7 @@ int InferManager::AddInfer(const std::string& sName, const std::string& sPath,
     std::cout << "当前输入类型：" << typeid(InputType).name() << "，输出类型："
               << typeid(OutputType).name() << "不支持" << std::endl;
     return -1;
-
+#endif
     // 添加rknn模型
   } else if (eType == eModelType::RKNN) {
     std::cout << "敬请期待" << std::endl;
