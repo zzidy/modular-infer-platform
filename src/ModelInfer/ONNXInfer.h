@@ -1,7 +1,11 @@
 #ifndef ONNXINFER_H
 #define ONNXINFER_H
 
+#include <onnxruntime/core/session/onnxruntime_cxx_api.h>
+
+#include <memory>
 #include <opencv2/opencv.hpp>
+#include <vector>
 
 #include "BaseInfer.h"
 
@@ -28,6 +32,9 @@ class ONNXInfer<cv::Mat, std::vector<float>>
   virtual ~ONNXInfer() = default;
   bool LoadModel() override;
   int Infer(cv::Mat& rInput, std::vector<float>& rOutput) override;
+
+ private:
+  std::unique_ptr<Ort::Session> m_pSession;
 };
 
 }  // namespace ModelInfer

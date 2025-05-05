@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(Platform)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_BUILD_TYPE Debug)
@@ -9,13 +9,21 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/install/lib/)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/install/bin)
 
+# 编译选项
+option(USE_ONNX "Enable ONNX Runtime support" ON)
+
 # opencv库
 find_package(OpenCV REQUIRED)
 
 # 设置onnxruntime库地址
-set(ONNXRUNTIME_DIR /usr/local)
-set(ONNXRUNTIME_INCLUDE_DIRS ${ONNXRUNTIME_DIR}/include)
-set(ONNXRUNTIME_LIBRARIES ${ONNXRUNTIME_DIR}/lib/libonnxruntime.so)
+if(USE_ONNX)
+        message(STATUS "ONNX Runtime support is ENABLED")
+        set(ONNXRUNTIME_DIR /usr/local)
+        set(ONNXRUNTIME_INCLUDE_DIRS ${ONNXRUNTIME_DIR}/include)
+        set(ONNXRUNTIME_LIBRARIES ${ONNXRUNTIME_DIR}/lib/libonnxruntime.so)
+else()
+        message(STATUS "ONNX Runtime support is DISABLED")
+endif()
 
 add_subdirectory(src/Config)
 add_subdirectory(src/Task)
@@ -29,9 +37,9 @@ include_directories(src/ModelInfer)
 
 include_directories(${OpenCV_INCLUDE_DIRS})
 
-add_executable(Platform 
+add_executable(Platform
         src/Platform.cpp)
 
-target_link_libraries(Platform PRIVATE 
-                        dl ${OpenCV_LIBS} 
-                        Config PreProcess Task ModelInfer)                        
+target_link_libraries(Platform PRIVATE
+        dl ${OpenCV_LIBS}
+        Config PreProcess Task ModelInfer)
