@@ -4,7 +4,8 @@ preprocess,OutputPath,string,../data/output.jpg
 preprocess,DstWidth,int,640
 preprocess,DstHeight,int,640
 preprocess,DstChannels,int,3
-preprocess,IsNorm,bool,0
+preprocess,IsNorm,bool,1
+postprocess,UseMeanStd,bool,0
 preprocess,IsBorder,bool,1
 preprocess,IsScale,bool,1
 modelinfer,ModelPath,string,../model/yolov5s.onnx

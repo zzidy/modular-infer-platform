@@ -16,6 +16,7 @@ const std::string sDstWidth = "DstWidth";
 const std::string sDstHeight = "DstHeight";
 const std::string sDstChannels = "DstChannels";
 const std::string sIsNorm = "IsNorm";
+const std::string sUseMeanStd = "UseMeanStd";
 const std::string sIsBorder = "IsBorder";
 const std::string sIsScale = "IsScale";
 
@@ -88,15 +89,12 @@ void ONNXTask::DoTask() {
   pConfig->GetInt(sGroupPre, sDstHeight, pParams.iDstHeight);
   pConfig->GetInt(sGroupPre, sDstChannels, pParams.iDstChannels);
   pConfig->GetBool(sGroupPre, sIsNorm, pParams.bIsNorm);
+  pConfig->GetBool(sGroupPre, sUseMeanStd, pParams.bUseMeanStd);
   pConfig->GetBool(sGroupPre, sIsBorder, pParams.bIsBorder);
   pConfig->GetBool(sGroupPre, sIsScale, pParams.bIsScale);
 
   // 执行预处理操作
   pPreProcess->Process(mSrcImg, mDstImg);
-
-  cv::imshow("dst", mDstImg);
-  cv::waitKey(0);
-  cv::imwrite(sDstImgPath, mDstImg);
 
   // 执行模型推理操作
   ModelInfer::YoloOutput vfInferOut;

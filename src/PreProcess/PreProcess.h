@@ -34,7 +34,7 @@ struct Img2ImgParams {
 
   // border
   bool bIsBorder;
-  bool bIsScale;
+  bool bIsScale;  // 按比例自动计算border长宽
   int iBorderWidth;
   int iBorderHeight;
 
