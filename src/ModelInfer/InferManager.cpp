@@ -21,7 +21,7 @@ int InferManager::AddInfer(const std::string& sName, const std::string& sPath,
 #else
     // 判断是否存在该输入输出的特化模版
     if (typeid(InputType) == typeid(cv::Mat) &&
-        typeid(OutputType) == typeid(std::vector<float>)) {
+        typeid(OutputType) == typeid(YoloOutput)) {
       // 判断是否已存在
       if (m_mapInfer.find(sName) == m_mapInfer.end()) {
         m_mapInfer[sName] =
@@ -86,10 +86,12 @@ std::shared_ptr<BaseInfer<InputType, OutputType>> InferManager::GetInfer(
 }
 
 // 显示实例化
-template int InferManager::AddInfer<cv::Mat, std::vector<float>>(
+#ifdef USE_ONNX
+template int InferManager::AddInfer<cv::Mat, YoloOutput>(
     const std::string& sName, const std::string& sPath, eModelType eType);
-template int InferManager::AddInfer<cv::Mat, std::vector<float>>(
+template int InferManager::AddInfer<cv::Mat, YoloOutput>(
     const std::string& sName, const std::string& sPath, std::string& sType);
-template std::shared_ptr<BaseInfer<cv::Mat, std::vector<float>>>
-InferManager::GetInfer<cv::Mat, std::vector<float>>(const std::string& sName);
+template std::shared_ptr<BaseInfer<cv::Mat, YoloOutput>>
+InferManager::GetInfer<cv::Mat, YoloOutput>(const std::string& sName);
+#endif
 }  // namespace ModelInfer

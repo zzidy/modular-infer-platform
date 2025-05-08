@@ -23,15 +23,14 @@ class ONNXInfer : public BaseInfer<InputType, OutputType> {
   int Infer(InputType& rInput, OutputType& rOutput) = 0;
 };
 
-// 用于图片输入，数组输出的onnx模型推理的模版特化
+// 用于yolo的onnx模型推理的模版特化
 template <>
-class ONNXInfer<cv::Mat, std::vector<float>>
-    : public BaseInfer<cv::Mat, std::vector<float>> {
+class ONNXInfer<cv::Mat, YoloOutput> : public BaseInfer<cv::Mat, YoloOutput> {
  public:
   ONNXInfer(std::string sName, std::string sPath);
   virtual ~ONNXInfer() = default;
   bool LoadModel() override;
-  int Infer(cv::Mat& rInput, std::vector<float>& rOutput) override;
+  int Infer(cv::Mat& rInput, YoloOutput& rOutput) override;
 
  private:
   std::unique_ptr<Ort::Session> m_pSession;

@@ -48,7 +48,7 @@ void ONNXTask::PreTask() {
   std::string sModelInferPath, sModelInferType;
   pConfig->GetString(sGroupInfer, sModelPath, sModelInferPath);
   pConfig->GetString(sGroupInfer, sModelType, sModelInferType);
-  rInferManager.AddInfer<cv::Mat, std::vector<float>>(
+  rInferManager.AddInfer<cv::Mat, ModelInfer::YoloOutput>(
       sModelInferName, sModelInferPath, sModelInferType);
 }
 
@@ -99,11 +99,11 @@ void ONNXTask::DoTask() {
   cv::imwrite(sDstImgPath, mDstImg);
 
   // 执行模型推理操作
-  std::vector<float> vfInferOut;
+  ModelInfer::YoloOutput vfInferOut;
   ModelInfer::InferManager& rInferManager =
       ModelInfer::InferManager::GetInstance();
   auto pModelInfer =
-      rInferManager.GetInfer<cv::Mat, std::vector<float>>(sModelInferName);
+      rInferManager.GetInfer<cv::Mat, ModelInfer::YoloOutput>(sModelInferName);
   pModelInfer->Infer(mDstImg, vfInferOut);
 }
 

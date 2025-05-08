@@ -22,14 +22,13 @@ class ONNXEnv {
   }
 };
 
-ONNXInfer<cv::Mat, std::vector<float>>::ONNXInfer(std::string sName,
-                                                  std::string sPath)
-    : BaseInfer<cv::Mat, std::vector<float>>(sName, sPath) {
+ONNXInfer<cv::Mat, YoloOutput>::ONNXInfer(std::string sName, std::string sPath)
+    : BaseInfer<cv::Mat, YoloOutput>(sName, sPath) {
   // 初始化ONNXRuntime环境
   ONNXEnv& pEnv = ONNXEnv::GetInstance();
   LoadModel();
 };
-bool ONNXInfer<cv::Mat, std::vector<float>>::LoadModel() {
+bool ONNXInfer<cv::Mat, YoloOutput>::LoadModel() {
   if (IsLoaded()) {
     std::cout << "模型 " << GetModelName() << " 已加载" << std::endl;
     return true;
@@ -51,8 +50,8 @@ bool ONNXInfer<cv::Mat, std::vector<float>>::LoadModel() {
   return false;
 }
 
-int ONNXInfer<cv::Mat, std::vector<float>>::Infer(cv::Mat& rInput,
-                                                  std::vector<float>& rOutput) {
+int ONNXInfer<cv::Mat, YoloOutput>::Infer(cv::Mat& rInput,
+                                          YoloOutput& rOutput) {
   std::cout << "test" << std::endl;
   return 0;
 }

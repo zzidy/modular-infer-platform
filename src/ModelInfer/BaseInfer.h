@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 namespace ModelInfer {
 
@@ -30,5 +31,17 @@ class BaseInfer {
   std::string m_sModelPath;
   bool m_bIsLoaded;
 };
+
+// yolo的输出数据格式
+struct YoloAnchor {
+  float x, y, w, h;                 // bbox
+  float objectness;                 // 置信度
+  std::vector<float> class_scores;  // 分类得分
+};
+using YoloOutput = std::vector<std::vector<std::vector<YoloAnchor>>>;
+// 第1层vector：3个特征层
+// 第2层vector：每个特征层里有 3 个 anchor
+// 第3层vector：每个 anchor 上的 HxW 个格子
+
 }  // namespace ModelInfer
 #endif
