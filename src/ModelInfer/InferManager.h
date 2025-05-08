@@ -34,7 +34,7 @@ class InferManager {
 
   template <typename InputType, typename OutputType>
   int AddInfer(const std::string& sName, const std::string& sPath,
-               const std::string& sType);
+               std::string& sType);
 
   template <typename InputType, typename OutputType>
   std::shared_ptr<BaseInfer<InputType, OutputType>> GetInfer(

@@ -61,7 +61,7 @@ int InferManager::AddInfer(const std::string& sName, const std::string& sPath,
 
 template <typename InputType, typename OutputType>
 int InferManager::AddInfer(const std::string& sName, const std::string& sPath,
-                           const std::string& sType) {
+                           std::string& sType) {
   std::transform(sType.begin(), sType.end(), sType.begin(),
                  [](char c) { return std::tolower(c); });
 
@@ -85,4 +85,11 @@ std::shared_ptr<BaseInfer<InputType, OutputType>> InferManager::GetInfer(
       m_mapInfer[sName]);
 }
 
+// 显示实例化
+template int InferManager::AddInfer<cv::Mat, std::vector<float>>(
+    const std::string& sName, const std::string& sPath, eModelType eType);
+template int InferManager::AddInfer<cv::Mat, std::vector<float>>(
+    const std::string& sName, const std::string& sPath, std::string& sType);
+template std::shared_ptr<BaseInfer<cv::Mat, std::vector<float>>>
+InferManager::GetInfer<cv::Mat, std::vector<float>>(const std::string& sName);
 }  // namespace ModelInfer

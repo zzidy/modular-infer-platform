@@ -27,8 +27,14 @@ ONNXInfer<cv::Mat, std::vector<float>>::ONNXInfer(std::string sName,
     : BaseInfer<cv::Mat, std::vector<float>>(sName, sPath) {
   // 初始化ONNXRuntime环境
   ONNXEnv& pEnv = ONNXEnv::GetInstance();
+  LoadModel();
 };
 bool ONNXInfer<cv::Mat, std::vector<float>>::LoadModel() {
+  if (IsLoaded()) {
+    std::cout << "模型 " << GetModelName() << " 已加载" << std::endl;
+    return true;
+  }
+
   if (!GetModelName().empty()) {
     Ort::SessionOptions pSession_options;
 
@@ -38,13 +44,16 @@ bool ONNXInfer<cv::Mat, std::vector<float>>::LoadModel() {
     m_pSession = std::make_unique<Ort::Session>(ONNXEnv::GetInstance().GetEnv(),
                                                 GetModelPath().c_str(),
                                                 pSession_options);
+    SetIsLoaded(m_pSession != nullptr);
     return m_pSession != nullptr;
   }
+
   return false;
 }
 
 int ONNXInfer<cv::Mat, std::vector<float>>::Infer(cv::Mat& rInput,
                                                   std::vector<float>& rOutput) {
+  std::cout << "test" << std::endl;
   return 0;
 }
 

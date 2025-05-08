@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.10)
 project(My_Task)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_BUILD_TYPE Debug)
 
-set(TASK_NAME PreProcessTask) # 每次编译新业务时修改成文件夹名
+set(TASK_NAME ONNXTask) # 每次编译新业务时修改成文件夹名
 
 find_package(OpenCV REQUIRED)
 
@@ -14,7 +14,8 @@ include_directories(${TASK_NAME}
                     ${OpenCV_INCLUDE_DIRS}
                     ../Task
                     ../Config
-                    ../PreProcess)
+                    ../PreProcess
+                    ../ModelInfer)
 
 add_library(Task SHARED ${TASK_NAME}/${TASK_NAME}.cpp) 
 
@@ -35,5 +36,11 @@ endif()
 # 如果存在data文件夹，则将data文件夹安装到指定路径
 if(EXISTS ${CMAKE_SOURCE_DIR}/${TASK_NAME}/data)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/${TASK_NAME}/data
+            DESTINATION ${INSTALL_LIB_DIR}/..)
+endif()
+
+# 如果存在model文件夹，则将model文件夹安装到指定路径
+if(EXISTS ${CMAKE_SOURCE_DIR}/${TASK_NAME}/model)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/${TASK_NAME}/model
             DESTINATION ${INSTALL_LIB_DIR}/..)
 endif()

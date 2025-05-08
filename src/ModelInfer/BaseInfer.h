@@ -10,7 +10,9 @@ template <typename InputType, typename OutputType>
 class BaseInfer {
  public:
   BaseInfer(std::string sModelName, std::string sModelPath)
-      : m_sModelName(sModelName), m_sModelPath(sModelPath){};
+      : m_sModelName(sModelName),
+        m_sModelPath(sModelPath),
+        m_bIsLoaded(false){};
   virtual ~BaseInfer() = default;
 
   // 模型推理相关接口

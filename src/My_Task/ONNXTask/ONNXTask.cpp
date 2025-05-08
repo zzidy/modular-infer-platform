@@ -1,11 +1,12 @@
-#include "PreProcessTask.h"
+#include "ONNXTask.h"
 
 #include <opencv2/opencv.hpp>
 
 #include "ConfigManager.h"
+#include "InferManager.h"
 #include "PreProcessMan.h"
 
-const std::string sConfigName = "preprocess";
+const std::string sConfigName = "onnx";
 const std::string sConfigPath = "../config/config.csv";
 
 const std::string sGroupPre = "preprocess";
@@ -18,10 +19,19 @@ const std::string sIsNorm = "IsNorm";
 const std::string sIsBorder = "IsBorder";
 const std::string sIsScale = "IsScale";
 
+const std::string sGroupInfer = "modelinfer";
+const std::string sModelPath = "ModelPath";
+const std::string sModelName = "ModelName";
+const std::string sModelType = "ModelType";
+
+const std::string sGroupPost = "postprocess";
+
 const std::string sPreProcessName = "Img2Img";
+const std::string sModelInferName = "YOLOv5";
 
 namespace Task {
-void PreProcessTask::PreTask() {
+
+void ONNXTask::PreTask() {
   // 配置文件
   Config::ConfigManager& rConfigManager = Config::ConfigManager::GetInstance();
   rConfigManager.AddConfig(sConfigName, sConfigPath, Config::eConfigType::CSV);
@@ -30,10 +40,19 @@ void PreProcessTask::PreTask() {
   PreProcess::PreProcessMan& rPreProcessMan =
       PreProcess::PreProcessMan::GetInstance();
   rPreProcessMan.AddPreProcess<cv::Mat, cv::Mat>(sPreProcessName);
+
+  // 模型推理模块
+  ModelInfer::InferManager& rInferManager =
+      ModelInfer::InferManager::GetInstance();
+  auto pConfig = rConfigManager.GetConfig(sConfigName);
+  std::string sModelInferPath, sModelInferType;
+  pConfig->GetString(sGroupInfer, sModelPath, sModelInferPath);
+  pConfig->GetString(sGroupInfer, sModelType, sModelInferType);
+  rInferManager.AddInfer<cv::Mat, std::vector<float>>(
+      sModelInferName, sModelInferPath, sModelInferType);
 }
 
-void PreProcessTask::DoTask() {
-  // 加载配置文件指针
+void ONNXTask::DoTask() {
   Config::ConfigManager& rConfigManager = Config::ConfigManager::GetInstance();
   auto pConfig = rConfigManager.GetConfig(sConfigName);
 
@@ -78,9 +97,18 @@ void PreProcessTask::DoTask() {
   cv::imshow("dst", mDstImg);
   cv::waitKey(0);
   cv::imwrite(sDstImgPath, mDstImg);
+
+  // 执行模型推理操作
+  std::vector<float> vfInferOut;
+  ModelInfer::InferManager& rInferManager =
+      ModelInfer::InferManager::GetInstance();
+  auto pModelInfer =
+      rInferManager.GetInfer<cv::Mat, std::vector<float>>(sModelInferName);
+  pModelInfer->Infer(mDstImg, vfInferOut);
 }
 
-void PreProcessTask::PostTask() {}
+void ONNXTask::PostTask() {}
 
-TaskBase* CreateTask() { return new PreProcessTask(); }
+TaskBase* CreateTask() { return new ONNXTask(); }
+
 }  // namespace Task

@@ -7,4 +7,6 @@ preprocess,DstChannels,int,3
 preprocess,IsNorm,bool,0
 preprocess,IsBorder,bool,1
 preprocess,IsScale,bool,1
+modelinfer,ModelPath,string,../model/yolov5s.onnx
+modelinfer,ModelType,string,onnx
 postprocess,ClassNum,int,80
