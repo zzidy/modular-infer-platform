@@ -6,18 +6,19 @@ dev分支为当前开发分支，待开发完毕将合入主分支
 本项目旨在提供一个模块化、可扩展的深度模型推理平台，用于快速开发模型推理应用。提供了配置文件、预处理、模型推理、后处理、多线程、视频等模型推理时使用的模块，可供用户自由地编写业务代码，快速开发出自定义的模型推理应用。
 目前支持CV的ONNX模型推理。
 # 本项目该如何使用？
-  1. 首先安装本项目所需的其他软件：OpenCv
-  2. 新建build目录，并在build目录中执行
+  1. 首先安装本项目所需的其他软件：OpenCv、ONNXRuntime
+  2. 执行`./build_project.sh`，或如下3、4步骤
+  3. 新建build目录，并在build目录中执行
      ```sh
      cmake .. && make -j8
      ```
      编译好的动态库存放在`install/lib`下，可执行文件存放在`install/bin`下。
-  3. 如果要编译自己的业务，在`src/My_Task`目录中新建build目录，并在build目录中执行 
+  4. 如果要编译自己的业务，在`src/My_Task`目录中新建build目录，并在build目录中执行 
      ```sh
      cmake .. && make -j8
      make install
      ```
-  4. 回到`install/bin`下，通过`./Platform`即可运行。
+  5. 回到`install/bin`下，通过`./Platform`即可运行。
 
 # 如何编写自己的业务代码？
   在`src/My_Task`下仿照`TaskTest`写好自己的业务代码，然后按照注释提示修改`src/My_Task/CMakeLists.txt`，编译自己刚写好的业务代码并执行`make install`，即可通过`./Platform`运行自己的业务代码。

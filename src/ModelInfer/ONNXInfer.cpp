@@ -1,5 +1,7 @@
 #include "ONNXInfer.h"
 
+#include <cstring>
+
 namespace ModelInfer {
 
 // 单例模式管理Ort::Env实例
@@ -77,8 +79,6 @@ int ONNXInfer<cv::Mat, YoloOutput>::Infer(cv::Mat& rInput,
     return -1;
   }
 
-  std::cout << "\n1\n";
-
   // CHW to NCHW
   int iIntputChannel = rInput.channels();
   int iIntputHeight = rInput.rows;
@@ -103,35 +103,38 @@ int ONNXInfer<cv::Mat, YoloOutput>::Infer(cv::Mat& rInput,
       MemoryInfo, vInputValues.data(), vInputValues.size(), aInputShape.data(),
       aInputShape.size());
 
-  std::cout << "\n2\n";
+  auto pInputName =
+      m_pSession->GetInputNameAllocated(0, Ort::AllocatorWithDefaultOptions());
+  std::string sInputName = pInputName.get();
+  const char* cInputNames[] = {sInputName.c_str()};
 
-  // 执行推理
-  auto InputNames =
-      m_pSession->GetInputNameAllocated(0, Ort::AllocatorWithDefaultOptions())
-          .get();
   auto iOutputCount = m_pSession->GetOutputCount();
+
   std::vector<const char*> vOutputNames;
   for (size_t i = 0; i < iOutputCount; ++i) {
-    vOutputNames.push_back(
-        m_pSession
-            ->GetOutputNameAllocated(i, Ort::AllocatorWithDefaultOptions())
-            .get());
+    auto pName = m_pSession->GetOutputNameAllocated(
+        i, Ort::AllocatorWithDefaultOptions());
+
+    char* pTmp = new char[strlen(pName.get()) + 1];
+    strcpy(pTmp, pName.get());
+    vOutputNames.push_back(pTmp);
   }
 
-  std::cout << "\n3\n";
-
   Ort::RunOptions RunOptions(nullptr);
-  auto vOutputTensors = m_pSession->Run(RunOptions, &InputNames, &vInputTensor,
+  auto vOutputTensors = m_pSession->Run(RunOptions, cInputNames, &vInputTensor,
                                         1, vOutputNames.data(), iOutputCount);
 
-  std::cout << "\n4\n";
+  // 释放内存
+  for (const char* pName : vOutputNames) {
+    delete[] pName;
+  }
 
   // 解析输出数据
   rOutput.clear();
   rOutput.reserve(iOutputCount);  // 3 层
 
-  for (size_t layerIdx = 0; layerIdx < iOutputCount; ++layerIdx) {
-    auto& rTensor = vOutputTensors[layerIdx];
+  for (size_t iLayerIdx = 0; iLayerIdx < iOutputCount; ++iLayerIdx) {
+    auto& rTensor = vOutputTensors[iLayerIdx];
 
     float* pTensorData = rTensor.GetTensorMutableData<float>();
     auto vShape = rTensor.GetTensorTypeAndShapeInfo().GetShape();
@@ -144,7 +147,7 @@ int ONNXInfer<cv::Mat, YoloOutput>::Infer(cv::Mat& rInput,
     int64_t iA = vShape[1];  // anchor num
     int64_t iH = vShape[2];
     int64_t iW = vShape[3];
-    int64_t iC = vShape[4];
+    int64_t iC = vShape[4];  // class num
 
     if (iB != 1) {
       std::cout << "模型推理结果的batch size错误" << std::endl;
@@ -157,19 +160,19 @@ int ONNXInfer<cv::Mat, YoloOutput>::Infer(cv::Mat& rInput,
       for (int64_t h = 0; h < iH; ++h) {
         for (int64_t w = 0; w < iW; ++w) {
           size_t offset = (((0 * iA + a) * iH + h) * iW + w) * iC;
-          float x = pTensorData[offset + 0];
-          float y = pTensorData[offset + 1];
-          float w_box = pTensorData[offset + 2];
-          float h_box = pTensorData[offset + 3];
-          float objectness = pTensorData[offset + 4];
+          float fX = pTensorData[offset + 0];
+          float fY = pTensorData[offset + 1];
+          float fBoxW = pTensorData[offset + 2];
+          float fBoxH = pTensorData[offset + 3];
+          float fObjectness = pTensorData[offset + 4];
 
-          std::vector<float> classScores(iC - 5);
+          std::vector<float> vClassScores(iC - 5);
           for (int i = 5; i < iC; ++i) {
-            classScores[i - 5] = pTensorData[offset + i];
+            vClassScores[i - 5] = pTensorData[offset + i];
           }
 
           anchorOutputs[a].emplace_back(YoloAnchor{
-              x, y, w_box, h_box, objectness, std::move(classScores)});
+              fX, fY, fBoxW, fBoxH, fObjectness, std::move(vClassScores)});
         }
       }
     }

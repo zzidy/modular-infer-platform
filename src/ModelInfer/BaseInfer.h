@@ -34,9 +34,9 @@ class BaseInfer {
 
 // yolo的输出数据格式
 struct YoloAnchor {
-  float x, y, w, h;                 // bbox
-  float objectness;                 // 置信度
-  std::vector<float> class_scores;  // 分类得分
+  float fX, fY, fW, fH;             // bbox
+  float fObjectness;                // 置信度
+  std::vector<float> vClassScores;  // 分类得分
 };
 using YoloOutput = std::vector<std::vector<std::vector<YoloAnchor>>>;
 // 第1层vector：3个特征层
