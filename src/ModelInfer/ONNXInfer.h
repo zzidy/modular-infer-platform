@@ -15,22 +15,11 @@ namespace ModelInfer {
 template <typename InputType, typename OutputType>
 class ONNXInfer : public BaseInfer<InputType, OutputType> {
  public:
-  ONNXInfer(std::string sName, std::string sPath)
-      : BaseInfer<InputType, OutputType>(sName, sPath){};
-  virtual ~ONNXInfer() = default;
-
-  bool LoadModel() = 0;
-  int Infer(InputType& rInput, OutputType& rOutput) = 0;
-};
-
-// 用于yolo的onnx模型推理的模版特化
-template <>
-class ONNXInfer<cv::Mat, YoloOutput> : public BaseInfer<cv::Mat, YoloOutput> {
- public:
   ONNXInfer(std::string sName, std::string sPath);
-  virtual ~ONNXInfer() = default;
+  virtual ~ONNXInfer();
+
   bool LoadModel() override;
-  int Infer(cv::Mat& rInput, YoloOutput& rOutput) override;
+  int Infer(InputType& rInput, OutputType& rOutput);
 
  private:
   std::unique_ptr<Ort::Session> m_pSession;

@@ -27,10 +27,10 @@ dev分支为当前开发分支，待开发完毕将合入主分支
   * **业务库实现动态加载**，无需每次修改业务代码就编译整个项目，且能自动安装。
   * **config模块**，可以从配置文件中读取配置。
   * **预处理模块**：实现了图片到图片的预处理，包括图像变形缩放等功能。
+  * **模型加载推理模块**：包含onnx等模型的推理
+  * **后处理模块**：包括yolo算法的后处理功能。
 # 预计功能（开发中）：
   * **日志log模块**
-  * **模型加载推理模块**：包含rknn、onnx、tensorrt等模型的推理
-  * **后处理模块**：包括yolo算法的后处理，行为iou检测、追踪模块、个体识别等功能。
   * **视频模块**：包括提供图片切片、视频显示和视频转发的功能。
   * **多线程模块**
   * **模型转换模块**：调用python脚本将模型转换成rknn等模型。
@@ -53,4 +53,4 @@ dev分支为当前开发分支，待开发完毕将合入主分支
 * **Task**：该模块为业务模块。如果要编写自己的业务代码，需要继承`TaskBase`类，并重写CreateTask函数。在框架代码Platform中使用了动态加载业务库，每次无需编译完整的框架代码，仅需要编译业务动态库。`TaskBase`中提供了三个函数，分别是`PreTask`、`DoTask`和`PostTask`。将自己的业务代码按照性质分类，分别放入继承类对应函数中。
 * **Config**：该模块提供配置文件的统一管理，可从配置文件中读取参数。`ConfigManager`使用单例模式设计，用于提供全局唯一的配置文件管理者。该管理者有一个存储`ConfigBase`智能指针的map，一个添加配置文件的工厂函数`AddConfig`，以及可以获得Config实例的`GetConfig`。当前`ConfigBase`仅实现了`ConfigCSV`类，该类要求配置文件的格式为`Group,Name,Type,Value`，支持的`Type`参数有`string,int,double,bool` 。
 * **PreProcess**：该模块为预处理模块，负责对输入模型的数据做预处理。`PreProcessMan`使用单例模式设计，用于提供全局唯一的预处理管理者。该管理者有一个存储空智能指针的map，一个添加预处理文件的工厂函数`AddPreProcess`，以及可以获得PreProcess实例的`GetPreProcess`。`PreProcess`类采用模板设计，目前仅支持`PreProcess<cv::Mat, cv::Mat>`的特化模板，即只支持图片输入，图片输出的预处理操作。
-* **ModelInfer**：该模块为模型推理模块，目前支持rknn、onnx模型的推理。
+* **ModelInfer**：该模块为模型推理模块，目前支持onnx的YOLOv5模型的推理。`InferManager`使用单例模式设计，用于提供全局唯一的模型推理管理者。该管理者有一个存储空智能指针的map，一个添加模型推理文件的工厂函数`AddInfer`，以及可以获得ModelInfer实例的`GetInfer`。`BaseInfer`类采用模板设计，并有子类`ONNXInfer`，目前仅支持`ONNXInfer<cv::Mat, YoloOutput>`的特化模板，即只支持图片输入，YOLOv5格式输出的模型推理操作。
