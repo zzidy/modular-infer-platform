@@ -34,9 +34,6 @@ ONNXInfer<InputType, OutputType>::ONNXInfer(std::string sName,
 }
 
 template <typename InputType, typename OutputType>
-ONNXInfer<InputType, OutputType>::~ONNXInfer(){};
-
-template <typename InputType, typename OutputType>
 bool ONNXInfer<InputType, OutputType>::LoadModel() {
   if (this->IsLoaded()) {
     std::cout << "模型 " << this->GetModelName() << " 已加载" << std::endl;
@@ -179,7 +176,7 @@ int ONNXInfer<cv::Mat, YoloOutput>::Infer(cv::Mat& rInput,
 
     rOutput.emplace_back(std::move(anchorOutputs));
   }
-
+  std::cout << "ONNXInfer推理成功" << std::endl;
   return 0;
 }
 

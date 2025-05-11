@@ -16,7 +16,7 @@ template <typename InputType, typename OutputType>
 class ONNXInfer : public BaseInfer<InputType, OutputType> {
  public:
   ONNXInfer(std::string sName, std::string sPath);
-  virtual ~ONNXInfer();
+  virtual ~ONNXInfer() = default;
 
   bool LoadModel() override;
   int Infer(InputType& rInput, OutputType& rOutput);
