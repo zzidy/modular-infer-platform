@@ -8,12 +8,12 @@
 
 namespace PostProcess {
 
-enum class PostProcessType { Yolo };
+enum class ePostProcessType { Yolo };
 
 class PostProcessMan {
  private:
   PostProcessMan();
-  std::unordered_map<std::string, std::shared_ptr<void>> postProcessMap;
+  std::unordered_map<std::string, std::shared_ptr<void>> m_mapPostProcess;
 
  public:
   ~PostProcessMan();
@@ -25,12 +25,13 @@ class PostProcessMan {
   }
 
   template <typename InputType, typename OutputType>
-  int AddPostProcess(const std::string& sName);
+  int AddPostProcess(const std::string& sName, ePostProcessType eType);
 
   template <typename InputType, typename OutputType>
   std::shared_ptr<BasePostProcess<InputType, OutputType>> GetPostProcess(
       const std::string& sName);
 };
+
 }  // namespace PostProcess
 
 #endif
