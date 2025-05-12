@@ -4,6 +4,7 @@
 
 #include "ConfigManager.h"
 #include "InferManager.h"
+#include "PostProcessMan.h"
 #include "PreProcessMan.h"
 #include "Task.h"
 
@@ -12,6 +13,7 @@ void Init() {
   Config::ConfigManager::GetInstance();
   ModelInfer::InferManager::GetInstance();
   PreProcess::PreProcessMan::GetInstance();
+  PostProcess::PostProcessMan::GetInstance();
 }
 
 int main() {

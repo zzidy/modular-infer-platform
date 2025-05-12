@@ -1,1 +1,1 @@
-add_library(PostProcess SHARED PostProcessMan.cpp PostProcess.cpp)
+add_library(PostProcess SHARED PostProcessMan.cpp YoloPostProcess.cpp)

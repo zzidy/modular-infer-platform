@@ -15,15 +15,14 @@ int PostProcessMan::AddPostProcess(const std::string& sName,
         typeid(OutputType) == typeid(cv::Mat)) {
       if (m_mapPostProcess.find(sName) == m_mapPostProcess.end()) {
         m_mapPostProcess[sName] =
-            std::make_shared<YoloPostProcess<InputType, OutputType>>(sName);
+            std::make_shared<YoloPostProcess<InputType, OutputType>>();
         std::cout << "Add PostProcess: " << sName << std::endl;
         return 0;
       }
       std::cout << "PostProcess: " << sName << " 已存在" << std::endl;
       return -1;
     }
-    std::cout << "当前Yolo后处理还不支持输入：" << typeid(InputType)
-              << "，输出:" << typeid(OutputType) << "的格式" << std::endl;
+    std::cout << "当前Yolo后处理还不支持输入输出的格式" << std::endl;
     return -1;
   }
 

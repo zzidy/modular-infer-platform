@@ -29,11 +29,13 @@ add_subdirectory(src/Config)
 add_subdirectory(src/Task)
 add_subdirectory(src/PreProcess)
 add_subdirectory(src/ModelInfer)
+add_subdirectory(src/PostProcess)
 
 include_directories(src/Config)
 include_directories(src/Task)
 include_directories(src/PreProcess)
 include_directories(src/ModelInfer)
+include_directories(src/PostProcess)
 
 include_directories(${OpenCV_INCLUDE_DIRS})
 
@@ -42,7 +44,7 @@ add_executable(Platform
 
 target_link_libraries(Platform PRIVATE
         dl ${OpenCV_LIBS}
-        Config PreProcess Task ModelInfer)
+        Config PreProcess Task ModelInfer PostProcess)
 
 # 显示编译内容
 message(STATUS "")

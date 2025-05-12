@@ -15,7 +15,8 @@ include_directories(${TASK_NAME}
                     ../Task
                     ../Config
                     ../PreProcess
-                    ../ModelInfer)
+                    ../ModelInfer
+                    ../PostProcess)
 
 add_library(Task SHARED ${TASK_NAME}/${TASK_NAME}.cpp) 
 
