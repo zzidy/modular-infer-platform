@@ -25,8 +25,8 @@ struct YoloParams : public BaseParams {
   int iOutputChannels;
 
   // 阈值
-  float fConfThresh;
-  float fNmsThresh;
+  double dConfThresh;
+  double dNmsThresh;
 
   // sigmoid
   bool bNeedSigmoid;
@@ -41,15 +41,15 @@ struct YoloParams : public BaseParams {
         iOutputWidth(0),
         iOutputHeight(0),
         iOutputChannels(0),
-        fConfThresh(0.0f),
-        fNmsThresh(0.0f),
+        dConfThresh(0.0f),
+        dNmsThresh(0.0f),
         bNeedSigmoid(false) {}
 
   YoloParams(int iClassNum, std::vector<std::string> vClassNames,
              std::vector<std::vector<int>> vClassColors, int iInputWidth,
              int iInputHeight, int iInputChannels, int iOutputWidth,
-             int iOutputHeight, int iOutputChannels, float fConfThresh,
-             float fNmsThresh, bool bNeedSigmoid)
+             int iOutputHeight, int iOutputChannels, float dConfThresh,
+             float dNmsThresh, bool bNeedSigmoid)
       : iClassNum(iClassNum),
         vClassNames(vClassNames),
         vClassColors(vClassColors),
@@ -59,8 +59,8 @@ struct YoloParams : public BaseParams {
         iOutputWidth(iOutputWidth),
         iOutputHeight(iOutputHeight),
         iOutputChannels(iOutputChannels),
-        fConfThresh(fConfThresh),
-        fNmsThresh(fNmsThresh),
+        dConfThresh(dConfThresh),
+        dNmsThresh(dNmsThresh),
         bNeedSigmoid(bNeedSigmoid) {}
   YoloParams(YoloParams& rParams)
       : iClassNum(rParams.iClassNum),
@@ -72,8 +72,8 @@ struct YoloParams : public BaseParams {
         iOutputWidth(rParams.iOutputWidth),
         iOutputHeight(rParams.iOutputHeight),
         iOutputChannels(rParams.iOutputChannels),
-        fConfThresh(rParams.fConfThresh),
-        fNmsThresh(rParams.fNmsThresh),
+        dConfThresh(rParams.dConfThresh),
+        dNmsThresh(rParams.dNmsThresh),
         bNeedSigmoid(rParams.bNeedSigmoid) {}
   YoloParams(YoloParams* pParams)
       : iClassNum(pParams->iClassNum),
@@ -83,8 +83,8 @@ struct YoloParams : public BaseParams {
         iOutputWidth(pParams->iOutputWidth),
         iOutputHeight(pParams->iOutputHeight),
         iOutputChannels(pParams->iOutputChannels),
-        fConfThresh(pParams->fConfThresh),
-        fNmsThresh(pParams->fNmsThresh),
+        dConfThresh(pParams->dConfThresh),
+        dNmsThresh(pParams->dNmsThresh),
         bNeedSigmoid(pParams->bNeedSigmoid) {}
 
   virtual void PrintParam() override;

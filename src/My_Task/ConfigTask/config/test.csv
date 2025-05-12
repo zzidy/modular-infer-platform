@@ -1,7 +1,8 @@
 Group,Name,Type,Value
-1,A,String,sdff
+1,A,String,sdff 123
 1,B,Int,20
 2,A,DOUble,3.14
+2,B,double,0.25
 3,C,bool,10
 3,A,,
 ,,,

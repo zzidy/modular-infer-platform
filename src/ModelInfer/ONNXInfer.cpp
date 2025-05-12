@@ -77,15 +77,14 @@ int ONNXInfer<cv::Mat, YoloOutput>::Infer(cv::Mat& rInput,
   }
 
   // CHW to NCHW
-  int iIntputChannel = rInput.channels();
-  int iIntputHeight = rInput.rows;
-  int iIntputWidth = rInput.cols;
-  std::vector<float> vInputValues(iIntputChannel * iIntputHeight *
-                                  iIntputWidth);
+  int iInputChannel = rInput.channels();
+  int iInputHeight = rInput.rows;
+  int iInputWidth = rInput.cols;
+  std::vector<float> vInputValues(iInputChannel * iInputHeight * iInputWidth);
   int idx = 0;
-  for (int c = 0; c < iIntputChannel; ++c) {
-    for (int i = 0; i < iIntputHeight; ++i) {
-      for (int j = 0; j < iIntputWidth; ++j) {
+  for (int c = 0; c < iInputChannel; ++c) {
+    for (int i = 0; i < iInputHeight; ++i) {
+      for (int j = 0; j < iInputWidth; ++j) {
         vInputValues[idx++] = rInput.at<cv::Vec3f>(i, j)[c];
       }
     }
@@ -94,8 +93,8 @@ int ONNXInfer<cv::Mat, YoloOutput>::Infer(cv::Mat& rInput,
   // 生成ONNX输入数据张量
   Ort::MemoryInfo MemoryInfo =
       Ort::MemoryInfo::CreateCpu(OrtDeviceAllocator, OrtMemTypeCPU);
-  std::array<int64_t, 4> aInputShape = {1, iIntputChannel, iIntputHeight,
-                                        iIntputWidth};
+  std::array<int64_t, 4> aInputShape = {1, iInputChannel, iInputHeight,
+                                        iInputWidth};
   Ort::Value vInputTensor = Ort::Value::CreateTensor<float>(
       MemoryInfo, vInputValues.data(), vInputValues.size(), aInputShape.data(),
       aInputShape.size());

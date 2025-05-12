@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_BUILD_TYPE Debug)
 
-set(TASK_NAME ONNXTask) # 每次编译新业务时修改成文件夹名
+set(TASK_NAME PostProcessTask) # 每次编译新业务时修改成文件夹名
 
 find_package(OpenCV REQUIRED)
 

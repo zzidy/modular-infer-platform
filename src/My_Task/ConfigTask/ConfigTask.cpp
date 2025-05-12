@@ -35,6 +35,8 @@ void ConfigTask::DoTask() {
   std::cout << "Group1 B: " << i << std::endl;
   pConfig->GetDouble(sGroup2, sNameA, d);
   std::cout << "Group2 A: " << d << std::endl;
+  pConfig->GetDouble(sGroup2, sNameB, d);
+  std::cout << "Group2 B: " << d << std::endl;
   pConfig->GetBool(sGroup3, sNameC, b);
   std::cout << "Group3 C: " << b << std::endl;
   std::cout << pConfig->GetString(sGroup3, sNameA, str) << std::endl;

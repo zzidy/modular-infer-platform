@@ -9,10 +9,9 @@ void YoloParams::PrintParam() {
   std::cout << std::endl;
   std::cout << "vClassColors:";
   for (auto& vColor : vClassColors)
-    for (int iVlaue : vColor)
-      std::cout << "(" << vColor[0] << "," << vColor[1] << "," << vColor[2]
-                << ") "
-                << " ";
+    std::cout << "(" << vColor[0] << "," << vColor[1] << "," << vColor[2]
+              << ") "
+              << " ";
   std::cout << std::endl;
   std::cout << "iInputWidth:" << iInputWidth << std::endl;
   std::cout << "iInputHeight:" << iInputHeight << std::endl;
@@ -20,8 +19,8 @@ void YoloParams::PrintParam() {
   std::cout << "iOutputWidth:" << iOutputWidth << std::endl;
   std::cout << "iOutputHeight:" << iOutputHeight << std::endl;
   std::cout << "iOutputChannels:" << iOutputChannels << std::endl;
-  std::cout << "fConfThresh:" << fConfThresh << std::endl;
-  std::cout << "fNmsThresh:" << fNmsThresh << std::endl;
+  std::cout << "dConfThresh:" << dConfThresh << std::endl;
+  std::cout << "dNmsThresh:" << dNmsThresh << std::endl;
   std::cout << "bNeedSigmoid:" << bNeedSigmoid << std::endl;
 }
 
@@ -52,6 +51,7 @@ int YoloPostProcess<ModelInfer::YoloOutput, cv::Mat>::Process(
 
   // 具体后处理流程
 
+  // 框的坐标变换
   return 0;
 }
 }  // namespace PostProcess

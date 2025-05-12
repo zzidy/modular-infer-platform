@@ -5,6 +5,7 @@
 #include <unordered_map>
 
 #include "BasePostProcess.h"
+#include "YoloPostProcess.h"
 
 namespace PostProcess {
 
@@ -26,6 +27,9 @@ class PostProcessMan {
 
   template <typename InputType, typename OutputType>
   int AddPostProcess(const std::string& sName, ePostProcessType eType);
+
+  template <typename InputType, typename OutputType>
+  int AddPostProcess(const std::string& sName, std::string& sType);
 
   template <typename InputType, typename OutputType>
   std::shared_ptr<BasePostProcess<InputType, OutputType>> GetPostProcess(

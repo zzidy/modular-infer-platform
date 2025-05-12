@@ -14,12 +14,12 @@ struct BaseParams {
   virtual void PrintParam() = 0;
 };
 
-template <typename IntputType, typename OutputType>
+template <typename InputType, typename OutputType>
 class BasePostProcess {
  public:
   BasePostProcess() {}
   virtual ~BasePostProcess() {}
-  virtual int Process(const IntputType& rInput, OutputType& rOutput) = 0;
+  virtual int Process(const InputType& rInput, OutputType& rOutput) = 0;
   int SetParams(std::shared_ptr<BaseParams> pParams) {
     m_pParams = std::move(pParams);
     m_pParams->PrintParam();

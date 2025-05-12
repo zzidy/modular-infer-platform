@@ -108,12 +108,12 @@ struct Img2ImgParams {
 };
 
 // 预处理模板类
-template <typename IntputType, typename OutputType>
+template <typename InputType, typename OutputType>
 class PreProcess {
  public:
   PreProcess() = default;
   virtual ~PreProcess() = default;
-  virtual int Process(const IntputType& rInput, OutputType& rOutput) = 0;
+  virtual int Process(const InputType& rInput, OutputType& rOutput) = 0;
   virtual int SetParams(Params& pParams) = 0;
   virtual Params& GetParams() = 0;
 
