@@ -4,6 +4,7 @@
 
 #include "ConfigManager.h"
 #include "InferManager.h"
+#include "PostProcessMan.h"
 #include "PreProcessMan.h"
 
 const std::string sConfigName = "onnx";
@@ -26,9 +27,17 @@ const std::string sModelName = "ModelName";
 const std::string sModelType = "ModelType";
 
 const std::string sGroupPost = "postprocess";
+const std::string sType = "Type";
+const std::string sClassNum = "ClassNum";
+const std::string sClassName = "ClassName";
+const std::string sClassColor = "ClassColor";
+const std::string sConfThresh = "ConfThresh";
+const std::string sNmsThresh = "NmsThresh";
+const std::string sNeedSigmoid = "NeedSigmoid";
 
 const std::string sPreProcessName = "Img2Img";
 const std::string sModelInferName = "YOLOv5";
+const std::string sPostProcessName = "Yolo";
 
 namespace Task {
 
@@ -51,6 +60,14 @@ void ONNXTask::PreTask() {
   pConfig->GetString(sGroupInfer, sModelType, sModelInferType);
   rInferManager.AddInfer<cv::Mat, ModelInfer::YoloOutput>(
       sModelInferName, sModelInferPath, sModelInferType);
+
+  // 后处理模块
+  PostProcess::PostProcessMan& rPostProcessMan =
+      PostProcess::PostProcessMan::GetInstance();
+  std::string sPostProcessType;
+  pConfig->GetString(sGroupPost, sType, sPostProcessType);
+  rPostProcessMan.AddPostProcess<ModelInfer::YoloOutput, cv::Mat>(
+      sPostProcessName, sPostProcessType);
 }
 
 void ONNXTask::DoTask() {
@@ -76,22 +93,22 @@ void ONNXTask::DoTask() {
   auto pPreProcess =
       rPreProcessMan.GetPreProcess<cv::Mat, cv::Mat>(sPreProcessName);
 
-  PreProcess::Img2ImgParams& pParams = pPreProcess->GetParams();
+  PreProcess::Img2ImgParams& pPreParams = pPreProcess->GetParams();
 
-  pParams.iSrcWidth = mSrcImg.cols;
-  pParams.iSrcHeight = mSrcImg.rows;
-  pParams.iSrcChannels = mSrcImg.channels();
-  std::cout << "src width: " << pParams.iSrcWidth << std::endl;
-  std::cout << "src height: " << pParams.iSrcHeight << std::endl;
-  std::cout << "src channels: " << pParams.iSrcChannels << std::endl;
+  pPreParams.iSrcWidth = mSrcImg.cols;
+  pPreParams.iSrcHeight = mSrcImg.rows;
+  pPreParams.iSrcChannels = mSrcImg.channels();
+  std::cout << "src width: " << pPreParams.iSrcWidth << std::endl;
+  std::cout << "src height: " << pPreParams.iSrcHeight << std::endl;
+  std::cout << "src channels: " << pPreParams.iSrcChannels << std::endl;
 
-  pConfig->GetInt(sGroupPre, sDstWidth, pParams.iDstWidth);
-  pConfig->GetInt(sGroupPre, sDstHeight, pParams.iDstHeight);
-  pConfig->GetInt(sGroupPre, sDstChannels, pParams.iDstChannels);
-  pConfig->GetBool(sGroupPre, sIsNorm, pParams.bIsNorm);
-  pConfig->GetBool(sGroupPre, sUseMeanStd, pParams.bUseMeanStd);
-  pConfig->GetBool(sGroupPre, sIsBorder, pParams.bIsBorder);
-  pConfig->GetBool(sGroupPre, sIsScale, pParams.bIsScale);
+  pConfig->GetInt(sGroupPre, sDstWidth, pPreParams.iDstWidth);
+  pConfig->GetInt(sGroupPre, sDstHeight, pPreParams.iDstHeight);
+  pConfig->GetInt(sGroupPre, sDstChannels, pPreParams.iDstChannels);
+  pConfig->GetBool(sGroupPre, sIsNorm, pPreParams.bIsNorm);
+  pConfig->GetBool(sGroupPre, sUseMeanStd, pPreParams.bUseMeanStd);
+  pConfig->GetBool(sGroupPre, sIsBorder, pPreParams.bIsBorder);
+  pConfig->GetBool(sGroupPre, sIsScale, pPreParams.bIsScale);
 
   // 执行预处理操作
   pPreProcess->Process(mSrcImg, mDstImg);
@@ -103,6 +120,66 @@ void ONNXTask::DoTask() {
   auto pModelInfer =
       rInferManager.GetInfer<cv::Mat, ModelInfer::YoloOutput>(sModelInferName);
   pModelInfer->Infer(mDstImg, vfInferOut);
+
+  // 后处理
+  int iClassNum;
+  pConfig->GetInt(sGroupPost, sClassNum, iClassNum);
+
+  std::vector<std::string> vClassNames(iClassNum);
+
+  std::vector<std::vector<int>> vClassColors;
+  vClassColors.reserve(iClassNum);
+
+  std::vector<int> vClassColori(3, 0);
+
+  // 读取ClassName和ClassColor
+  for (int i = 1; i <= iClassNum; ++i) {
+    std::string sClassNamei = sClassName + std::to_string(i);
+    pConfig->GetString(sGroupPost, sClassNamei, vClassNames[i - 1]);
+
+    std::string sClassColoriR = sClassColor + std::to_string(i) + "R";
+    std::string sClassColoriG = sClassColor + std::to_string(i) + "G";
+    std::string sClassColoriB = sClassColor + std::to_string(i) + "B";
+    pConfig->GetInt(sGroupPost, sClassColoriR, vClassColori[0]);
+    pConfig->GetInt(sGroupPost, sClassColoriG, vClassColori[1]);
+    pConfig->GetInt(sGroupPost, sClassColoriB, vClassColori[2]);
+    vClassColors.push_back(vClassColori);
+  }
+
+  std::cout << vClassColors.size() << std::endl;
+
+  // 为后处理模块读入参数
+  PostProcess::PostProcessMan& rPostProcessMan =
+      PostProcess::PostProcessMan::GetInstance();
+  auto pPostProcess =
+      rPostProcessMan.GetPostProcess<ModelInfer::YoloOutput, cv::Mat>(
+          sPostProcessName);
+
+  std::shared_ptr<PostProcess::YoloParams> pPostParams =
+      std::make_shared<PostProcess::YoloParams>();
+  pPostParams->iClassNum = iClassNum;
+  pPostParams->vClassNames = std::move(vClassNames);
+  pPostParams->vClassColors = std::move(vClassColors);
+  pPostParams->iInputWidth = mDstImg.cols;
+  pPostParams->iInputHeight = mDstImg.rows;
+  pPostParams->iInputChannels = mDstImg.channels();
+  pPostParams->iOutputWidth = mSrcImg.cols;
+  pPostParams->iOutputHeight = mSrcImg.rows;
+  pPostParams->iOutputChannels = mSrcImg.channels();
+  pConfig->GetDouble(sGroupPost, sConfThresh, pPostParams->dConfThresh);
+  pConfig->GetDouble(sGroupPost, sNmsThresh, pPostParams->dNmsThresh);
+  pConfig->GetBool(sGroupPost, sNeedSigmoid, pPostParams->bNeedSigmoid);
+  pPostParams->bIsBorder = pPreParams.bIsBorder;
+  pPostParams->bIsScale = pPreParams.bIsScale;
+  pPostParams->iBorderWidth = pPreParams.iBorderWidth;
+  pPostParams->iBorderHeight = pPreParams.iBorderHeight;
+
+  pPostProcess->SetParams(pPostParams);
+
+  pPostProcess->Process(vfInferOut, mSrcImg);
+  cv::imshow("out", mSrcImg);
+  cv::waitKey(0);
+  cv::imwrite(sDstImgPath, mSrcImg);
 }
 
 void ONNXTask::PostTask() {}

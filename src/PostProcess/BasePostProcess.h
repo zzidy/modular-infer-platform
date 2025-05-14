@@ -19,10 +19,10 @@ class BasePostProcess {
  public:
   BasePostProcess() {}
   virtual ~BasePostProcess() {}
-  virtual int Process(const InputType& rInput, OutputType& rOutput) = 0;
+  virtual int Process(InputType& rInput, OutputType& rOutput) = 0;
   int SetParams(std::shared_ptr<BaseParams> pParams) {
     m_pParams = std::move(pParams);
-    m_pParams->PrintParam();
+    // m_pParams->PrintParam();
     return 0;
   };
 
